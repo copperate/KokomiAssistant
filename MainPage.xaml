@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="KokomiAssistant.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <NavigationView PaneDisplayMode="Auto" 
+
+                        x:Name="NaviView"
+                        Loaded="NaviView_Loaded"
+                        ItemInvoked="NaviView_ItemInvoked"
+                        BackRequested="NaviView_BackRequested">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="KokomiAssistant.StatusPanel" Content="主页" Icon="Home" IsSelected="True"/>
+                <NavigationViewItemSeparator Opacity="1"/>
+                <NavigationViewItemHeader Content="社区"/>
+                <NavigationViewItem Tag="KokomiAssistant.SocialPanelGenshin" Content="原神">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/Genshin-wish.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="KokomiAssistant.SocialPanelStarrail" Content="崩坏：星穹铁道">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/starrail-wish.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="KokomiAssistant.SocialPanelHonkai3" Content="崩坏3">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/bh3-case.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemHeader Content="工具箱"/>
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelGame" Content="游戏工具" Icon="Link"/>
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelChat" Content="别野聊天室" Icon="Message"/>
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelAssistant" Content="助手工具" Icon="Pin"/>
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelDev" Content="开发工具" Icon="Repair"/>
+
+            </NavigationView.MenuItems>
+            <NavigationView.PaneFooter>
+                <Grid Margin="0,0,0,4">
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="5,0,0,0">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Assets/surf.png"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="未登入@local" HorizontalAlignment="Left" Margin="48,0,0,0" VerticalAlignment="Center" />
+                </Grid>
+
+            </NavigationView.PaneFooter>
+
+            <Frame x:Name="ContentFrame">
+
+            </Frame>
+        </NavigationView>
+    </Grid>
+</Page>

@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="KokomiAssistant.SettingsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Pivot Title="应用设定" FontSize="11">
+            <Pivot.RightHeader>
+                <CommandBar>
+                    <AppBarButton  Icon="Add"/>
+                </CommandBar>
+            </Pivot.RightHeader>
+            <PivotItem Header="外观与显示">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="社区与评论">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="账户与关联">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="版本与关于">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>
