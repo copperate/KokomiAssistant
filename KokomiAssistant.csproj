@@ -119,10 +119,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GetDetailUserVilla.cs" />
+    <Compile Include="GetPostDetail.cs" />
+    <Compile Include="GetPostList.cs" />
+    <Compile Include="GetUserDetail.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PostDetailPanel.xaml.cs">
+      <DependentUpon>PostDetailPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemeRedirectPanel.xaml.cs">
+      <DependentUpon>SchemeRedirectPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsPanel.xaml.cs">
       <DependentUpon>SettingsPanel.xaml</DependentUpon>
     </Compile>
@@ -150,6 +160,9 @@
     <Compile Include="ToolPanelGame.xaml.cs">
       <DependentUpon>ToolPanelGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserDetailPanel.xaml.cs">
+      <DependentUpon>UserDetailPanel.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -162,7 +175,23 @@
     <Content Include="Assets\Background\DefaultStarrailWallpaper.png" />
     <Content Include="Assets\Background\DefaultWallpaper.png" />
     <Content Include="Assets\Background\Wallpaper01.png" />
-    <Content Include="Assets\bh3-case.png" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\Content\Add_bg_Temp.png" />
+    <Content Include="Assets\Content\bh3-case.png" />
+    <Content Include="Assets\Content\bh3-tl.png" />
+    <Content Include="Assets\Content\Collpsed.png" />
+    <Content Include="Assets\Content\default_avatar.png" />
+    <Content Include="Assets\Content\default_pendant.png" />
+    <Content Include="Assets\Content\Expand.png" />
+    <Content Include="Assets\Content\Genshin-wish.png" />
+    <Content Include="Assets\Content\kokomi-icon.png" />
+    <Content Include="Assets\Content\starrail-wish.png" />
+    <Content Include="Assets\Content\xt-tl.png" />
+    <Content Include="Assets\Content\ys-tl.png" />
     <Content Include="Assets\game-logo\bh3-logo.jpg" />
     <Content Include="Assets\game-logo\dby-logo.jpg" />
     <Content Include="Assets\game-logo\hk2-logo.jpg" />
@@ -170,18 +199,34 @@
     <Content Include="Assets\game-logo\wd-logo.jpg" />
     <Content Include="Assets\game-logo\ys-logo.jpg" />
     <Content Include="Assets\game-logo\zzz-logo.png" />
-    <Content Include="Assets\Genshin-wish.png" />
-    <Content Include="Assets\starrail-wish.png" />
-    <Content Include="Assets\surf.png" />
-    <Content Include="Assets\xt-tl.png" />
-    <Content Include="Assets\ys-tl.png" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-125.png" />
+    <Content Include="Assets\SmallTile.scale-150.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +237,14 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PostDetailPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeRedirectPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsPanel.xaml">
       <SubType>Designer</SubType>
@@ -226,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToolPanelGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserDetailPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Data.Json;
 using Windows.Storage;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Collections.ObjectModel;
+using Windows.ApplicationModel.Contacts;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -28,49 +32,46 @@ namespace KokomiAssistant
         {
             this.InitializeComponent();
         }
-
-        public class PostList
-        {
-            public String ChannelID { get; set; }
-            public String PostID { get; set; }
-            public String UserHeaderURL { get; set; }
-            public String UserName { get; set; }
-            public String PostTitle { get; set; }
-            public String PostPreview { get; set; }
-            public String PostPreviewImg { get; set; }
-
-            public PostList(String channelid,String postid, String userheaderurl, String username,String posttitle,String postpreview,String postpreviewimg)
-            {
-                this.ChannelID = channelid;
-                this.PostID = postid;
-                this.UserHeaderURL = userheaderurl;
-                this.UserName = username;   
-                this.PostTitle = posttitle;
-                this.PostPreview = postpreview;
-                this.PostPreviewImg = postpreviewimg;
-            }
-
-        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void GetRecommendList(object sender, RoutedEventArgs e)
+        private void GetpostList_Recommend(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void GetOfficalpostList(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private void GetpostList_jiuguan(object sender, RoutedEventArgs e)
+        private void GetpostList_Offical(object sender, RoutedEventArgs e)
         {
 
-            Uri datauri = new Uri("https://api-takumi.miyoushe.com/post/wapi/getForumPostList?forum_id=26&gids=2&is_good=false&is_hot=false&page_size=20&sort_type=2");
-            
+        }
+        private void GetpostList_Jiuguan(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NavigateDetail(object sender, ItemClickEventArgs e)
+        {
+            String postID;
+            dynamic clickedItem = e.ClickedItem;
+                postID = (string)clickedItem.Tag;
+                Frame.Navigate(typeof(PostDetailPanel), postID);
+            //}
+        }
+
+        private void GetpostList_Offical(FrameworkElement sender, object args)
+        {
+
+        }
+
+        private void NavigateViaID(object sender, RoutedEventArgs e)
+        {
+            String postID = (string)navigateidbox.Text.ToString();
+            Frame.Navigate(typeof(PostDetailPanel), postID);
         }
     }
     
+
+
 }

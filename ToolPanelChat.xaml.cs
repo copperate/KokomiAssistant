@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -25,6 +26,47 @@ namespace KokomiAssistant
         public ToolPanelChat()
         {
             this.InitializeComponent();
+        }
+
+        private void ChannelPaneControl(object sender, TappedRoutedEventArgs e)
+        {
+            if (ChannelPaneControlButton.Tag == "expand")
+            {
+                ChannelPaneControlButton.Tag = "collpsed";
+                ChannelPaneControlButtonImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Content/Collpsed.png"));
+                ChannelPane.OpenPaneLength = 300;
+                ChannelPaneControlButton.Width = 40;
+            }
+            else
+            {
+                ChannelPaneControlButton.Tag = "expand";
+                ChannelPaneControlButtonImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Content/Expand.png"));
+                ChannelPane.OpenPaneLength = 60;
+                ChannelPaneControlButton.Width = 60;
+                
+            }
+
+        }
+
+        private void VillaPaneControl(object sender, TappedRoutedEventArgs e)
+        {
+            if (VillaPaneControlButton.Tag == "collpsed")
+            {
+                
+                VillaPaneControlButton.Tag = "expand";
+                VillaPaneControlButtonImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Content/Expand.png"));
+                VillaPane.OpenPaneLength = 60;
+                VillaPaneControlButton.Width = 60;
+            }
+            else
+            {
+                VillaPaneControlButton.Tag = "collpsed";
+                VillaPaneControlButtonImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Content/Collpsed.png"));
+                VillaPane.OpenPaneLength = 300;
+                VillaPaneControlButton.Width = 40;
+
+            }
+
         }
     }
 }

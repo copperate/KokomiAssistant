@@ -1,0 +1,99 @@
+﻿<Page
+    x:Class="KokomiAssistant.PostDetailPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <SplitView x:Name="DetailPanelSplit" IsPaneOpen="True"
+           OpenPaneLength="300" PanePlacement="Right" DisplayMode="Inline">
+            <Grid>
+                <TextBlock x:Name="PostTitle" Text="帖子标题"
+                   Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                <WebView x:Name="PostContent" Margin="5,60,0,40" />
+                <CommandBar VerticalAlignment="Bottom">
+                    <AppBarButton x:Name="DetailPanelLikeContentButton" Label="点赞" Icon="Like" />
+                    <AppBarButton x:Name="DetailPanelBookmarkContentButton" Label="收藏" Icon="OutlineStar" />
+                    <AppBarButton x:Name="DetailPanelShareContentButton" Label="转发" Icon="Share" />
+                    <AppBarSeparator />
+                    <AppBarButton Label="分享" Icon="Go" />
+                    <AppBarButton x:Name="DetailPanelControlButton" Label="收起侧栏" Icon="Forward" Click="DetailPanelControl"/>
+                </CommandBar>
+            </Grid>
+            <SplitView.Pane>
+                <Grid>
+                    <Grid Name="UserDetailPane0" VerticalAlignment="Top" Height="100" Tapped="NavigateUserDetail">
+                        <Ellipse Height="80" Width="80" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="DetailUserImage" ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock x:Name="DetailUserNickname" Text="深海舌鲆鱼" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,20,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                        <Grid Margin="100,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5">
+                            <Grid.Background>
+                                <AcrylicBrush TintColor="#CC0084FF"/>
+                            </Grid.Background>
+                            <TextBlock x:Name="DetailUserLevel" Text="版区 Lv.0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,5" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                        </Grid>
+                        <TextBlock x:Name="DetailUserIntroduce" Text="珊瑚宫心海天下第一" VerticalAlignment="Top" Margin="100,73,10,0" FocusVisualPrimaryBrush="Black" Foreground="#FF757575" FontSize="11" />
+                    </Grid>
+                    <Pivot Margin="0,100,0,0">
+                        <PivotItem x:Name="CommentPivotItem" Header="评论">
+                            <Grid>
+                                <Grid VerticalAlignment="Top">
+                                    <Button Width="91" Height="33" Content="添加评论" />
+                                    <TextBlock Text="排序方式" VerticalAlignment="Top" Margin="78,7,0,0" Width="72" />
+                                    <ComboBox HorizontalAlignment="Right" SelectedIndex="0" >
+                                        <TextBlock Text="热门"/>
+                                        <TextBlock Text="最早"/>
+                                        <TextBlock Text="最新"/>
+                                    </ComboBox>
+                                </Grid>
+                                
+                                <TextBlock Text="无法查看评论"
+                                           FontSize="24"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </PivotItem>
+                        <PivotItem Header="帖子详情">
+                            <Grid>
+                                <TextBlock Text="分区"
+                                           FontSize="14"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left" Margin="10,10,0,0"/>
+                                <Grid Margin="43,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5">
+                                    <Grid.Background>
+                                        <AcrylicBrush TintColor="#CCFF5D00"/>
+                                    </Grid.Background>
+                                    <TextBlock Name="AreaText" Text="分区" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,5" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                                </Grid>
+                                <TextBlock Name="ViewNumText" Text="浏览量"
+                                           FontSize="14"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left" Margin="10,40,0,0"/>
+                                <TextBlock Name="PostTagsText" Text="话题"
+                                           FontSize="14"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left" Margin="10,70,0,0"/>
+                                <TextBlock Name="PubTimeText" Text="发布/修改时间"
+                                           FontSize="14"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left" Margin="10,100,0,0"/>
+
+                            </Grid>
+                        </PivotItem>
+                    </Pivot>
+
+                </Grid>
+            </SplitView.Pane>
+        </SplitView>
+
+
+    </Grid>
+</Page>

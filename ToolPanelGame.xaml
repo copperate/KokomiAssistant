@@ -10,7 +10,7 @@
 
     <Grid>
         <TextBlock x:Name="pageTitle" Text="游戏工具"
-                   Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
-
+                   Margin="16" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top"/>
+        
     </Grid>
 </Page>

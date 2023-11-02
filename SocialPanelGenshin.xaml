@@ -12,15 +12,26 @@
         <Pivot Title="原神社区">
             <Pivot.RightHeader>
                 <CommandBar>
-                    <AppBarButton  Icon="Add"/>
-                    <AppBarButton  Icon="Refresh"/>
+                    <AppBarButton Icon="Zoom" Label="转到" AllowFocusOnInteraction="True">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <Grid>
+                                    <Button Width="40" Height="30" Content="Go" Click="NavigateViaID" />
+                                    <TextBox x:Name="navigateidbox" Height="30" Width="200" PlaceholderText="输入帖子ID（纯数字）" Margin="40,0,0,0" />
+                                </Grid>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                    <AppBarButton Icon="Filter" Label="筛选"/>
+                    <AppBarButton Icon="Add" Label="发布"/>
+                    <AppBarButton Icon="Refresh" Label="刷新"/>
                 </CommandBar>
             </Pivot.RightHeader>
             <PivotItem Header="发现">
                 <Grid>
                     <ScrollViewer>
-                        <ListView x:Name="listView" Height="Auto" Width="Auto" Loaded="GetRecommendList">
-                            <Grid x:Name="grid" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
+                        <ListView x:Name="listViewDiscover" Height="Auto" Width="Auto" Loaded="GetpostList_Recommend" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <Grid x:Name="grid1" Tag="41806864" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128" >
                                 <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="https://img-static.mihoyo.com/communityweb/avatar/avatar10011.png" Stretch="UniformToFill"></ImageBrush>
@@ -31,8 +42,7 @@
                                 <TextBlock Text="派蒙这次为旅行者准备了3.8版本游戏宣传图的电脑和手机壁纸，旅行者可以按照自己的需要选择使用哦~====================链接：https://pan.baidu.com/s/1az..." Margin="10,84,215,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" Width="{Binding Width, ElementName=grid}" VerticalAlignment="Top" />
                                 <Image Margin="0,10,10,10" Source="https://upload-bbs.miyoushe.com/upload/2023/07/29/75276539/3678eca4840988e95143153b21ede7ea_427813829569800883.jpg" Height="108" HorizontalAlignment="Right"/>
                             </Grid>
-                            <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
-                                
+                            <Grid x:Name="grid2" Tag="41781215" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128" >
                                 <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="https://img-static.mihoyo.com/communityweb/avatar/avatar10013.png" Stretch="UniformToFill"></ImageBrush>
@@ -41,10 +51,9 @@
                                 <TextBlock Text="提瓦特徒步团" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
                                 <TextBlock Text="「浪沫的旋舞」优菈主题绘画活动作品展示合集" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
                                 <TextBlock Text="旅行者们好呀！这里是提瓦特徒步团~\\(≧▽≦)/~「浪沫的旋舞」优菈主题绘画活动将于今日开奖，今天徒步团给大家整理了一些作品，快来看看吧~P.S 本次作品展示不代表最终获奖结果哟~  【优..." VerticalAlignment="Top" Margin="10,84,212,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
-                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.miyoushe.com/upload/2023/07/28/75379477/a9a1bec2040edb3999f6520c4a6bf788_4478742776377764783.png"/>
-                                
+                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.miyoushe.com/upload/2023/07/28/75379477/a9a1bec2040edb3999f6520c4a6bf788_4478742776377764783.png" Width="192"/>
                             </Grid>
-                            <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
+                            <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128" Tag="41781214">
                                 <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="https://img-static.mihoyo.com/communityweb/avatar/avatar10013.png" Stretch="UniformToFill"></ImageBrush>
@@ -53,7 +62,7 @@
                                 <TextBlock Text="提瓦特徒步团" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
                                 <TextBlock Text="「逃跑的太阳」可莉头像征集活动作品展示合集" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
                                 <TextBlock Text="旅行者们好呀！这里是提瓦特徒步团~\\(≧▽≦)/~「逃跑的太阳」可莉头像征集活动将于今日开奖，今天徒步团给大家整理了一些作品，快来看看吧~P.S 本次作品展示不代表最终获奖结果哟~「可莉」..." VerticalAlignment="Top" Margin="10,84,212,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
-                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.mihoyo.com/upload/2020/11/25/c2388922dc4099b74e41861d0c2469da.jpeg"/>
+                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.mihoyo.com/upload/2020/11/25/c2388922dc4099b74e41861d0c2469da.jpeg" Width="192" Height="108"/>
                             </Grid>
                             <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
                                 <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
@@ -64,7 +73,7 @@
                                 <TextBlock Text="原神" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
                                 <TextBlock Text="「螺音忆梦」——《原神》3.0回顾主题OST宣传H5正式上线" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
                                 <TextBlock Text="[图片]「螺音忆梦」——《原神》3.0回顾主题OST宣传H5正式上线。>>点击参与「螺音忆梦」H5活动&lt;&lt;拾起海螺聆听曾经的歌谣，音符编织珍珠般的梦境，在此，与回忆再次相逢……〓活动时间..." VerticalAlignment="Top" Margin="10,84,212,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
-                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.miyoushe.com/upload/2023/07/27/75276539/86d4e0ab7d9804a27df6966891dbebb8_8328771838483195514.jpg"/>
+                                <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="https://upload-bbs.miyoushe.com/upload/2023/07/27/75276539/86d4e0ab7d9804a27df6966891dbebb8_8328771838483195514.jpg" Width="192" Height="108"/>
                             </Grid>
                             <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
                                 <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
@@ -140,9 +149,25 @@
             <PivotItem Header="官方">
                 <Grid>
                     <ScrollViewer>
-                        <ListView Height="Auto" Width="Auto" Loaded="GetOfficalList">
-                            
-                            
+                        <ListView Height="Auto" Width="Auto" 
+                                  Loading="GetpostList_Offical" 
+                                  Loaded="GetpostList_Offical"
+                                  ItemsSource="">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding PostSummary}" VerticalAlignment="Top" Margin="10,84,212,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="{Binding PostPic}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </ScrollViewer>
                 </Grid>
@@ -172,6 +197,7 @@
 
                 </Grid>
             </PivotItem>
+
         </Pivot>
 
     </Grid>

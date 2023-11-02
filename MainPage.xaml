@@ -11,7 +11,6 @@
     <Grid>
 
         <NavigationView PaneDisplayMode="Auto" 
-
                         x:Name="NaviView"
                         Loaded="NaviView_Loaded"
                         ItemInvoked="NaviView_ItemInvoked"
@@ -22,17 +21,17 @@
                 <NavigationViewItemHeader Content="社区"/>
                 <NavigationViewItem Tag="KokomiAssistant.SocialPanelGenshin" Content="原神">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/Genshin-wish.png"/>
+                        <BitmapIcon UriSource="/Assets/Content/Genshin-wish.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Tag="KokomiAssistant.SocialPanelStarrail" Content="崩坏：星穹铁道">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/starrail-wish.png"/>
+                        <BitmapIcon UriSource="/Assets/Content/starrail-wish.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Tag="KokomiAssistant.SocialPanelHonkai3" Content="崩坏3">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/bh3-case.png"/>
+                        <BitmapIcon UriSource="/Assets/Content/bh3-case.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItemHeader Content="工具箱"/>
@@ -40,21 +39,32 @@
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelChat" Content="别野聊天室" Icon="Message"/>
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelAssistant" Content="助手工具" Icon="Pin"/>
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelDev" Content="开发工具" Icon="Repair"/>
+                <NavigationViewItem Tag="KokomiAssistant.PostDetailPanel" Content="帖子详情" />
+                <NavigationViewItem Tag="KokomiAssistant.UserDetailPanel" Content="用户详情" />
+
 
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
-                <Grid Margin="0,0,0,4">
-                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="5,0,0,0">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="Assets/surf.png"></ImageBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="0,0,0,0" Background="#FFE6E6E6">
+                    <Grid Margin="0,4,0,4" HorizontalAlignment="Left">
+                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="4,0,0,0">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Assets/Content/default_avatar.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                     <TextBlock Text="未登入@local" HorizontalAlignment="Left" Margin="48,0,0,0" VerticalAlignment="Center" />
                 </Grid>
+                    <Button.Flyout>
+                        <Flyout>
+                            <TextBlock Text="尚未登录，正在使用测试账号。"/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
 
             </NavigationView.PaneFooter>
 
             <Frame x:Name="ContentFrame">
+
 
             </Frame>
         </NavigationView>

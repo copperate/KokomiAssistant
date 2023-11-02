@@ -10,12 +10,90 @@
 
     <Grid>
         <Pivot Title="应用设定" FontSize="11">
-            <Pivot.RightHeader>
-                <CommandBar>
-                    <AppBarButton  Icon="Add"/>
-                </CommandBar>
-            </Pivot.RightHeader>
-            <PivotItem Header="外观与显示">
+            <PivotItem Header="外观与主页">
+                <ScrollViewer>
+                    <Grid>
+                        <TextBlock x:Name="SettingsAppearenceTitle1" Text="主页背景" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                        <GridView Name="SettingAppearenceBackgroundChooseGrid" VerticalAlignment="Top" Margin="16,60,16,0" Height="100" Loaded="SettingAppearenceBackgroundLoad" IsMultiSelectCheckBoxEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectionChanged="SettingAppearenceBackgroundSet">
+                            <Image Source="/Assets/Background/Wallpaper01.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="0" />
+                            <Image Source="/Assets/Background/DefaultHonkaiWallpaper.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="1" />
+                            <Image Source="/Assets/Background/DefaultStarrailWallpaper.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="2" />
+                            <Image Source="/Assets/Background/DefaultGenshinWallpaper.jpg" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="3" />
+                            <Image Name="Custombg" Source="/Assets/Content/Add_bg_Temp.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="4" />
+                        </GridView>
+                        <Button VerticalAlignment="Top" Margin="16,170,0,0" Height="29" Width="104" Content="自定义背景……" Click="SettingsAppearenceBackgroundsSetButton" />
+                        <Grid Margin="0,218,0,0" VerticalAlignment="Top">
+                            <TextBlock x:Name="SettingsAppearenceTitle2" Text="动态磁贴" Margin="16,0,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black" HorizontalAlignment="Left"/>
+                            <ToggleSwitch Margin="120,2,0,0" VerticalAlignment="Top" OffContent="已关闭" OnContent="已开启" />
+                            <TextBlock Text="选择要在磁贴上显示的内容，需要登入账号才能使用。" Margin="16,34,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                            <ToggleSwitch Margin="16,58,0,0" VerticalAlignment="Top" OffContent="原粹树脂" OnContent="原粹树脂" Width="160" />
+                            <ToggleSwitch Margin="181,58,0,0" VerticalAlignment="Top" OffContent="委托数量、探索派遣(原神)" OnContent="委托数量、探索派遣(原神)" Width="238" />
+                            <ToggleSwitch Margin="181,95,0,0" VerticalAlignment="Top" OffContent="量子流形、记忆战场(崩三)" OnContent="量子流形、记忆战场(崩三)" Width="238" />
+                            <ToggleSwitch Margin="181,132,0,0" VerticalAlignment="Top" OffContent="每日实训、委托派遣(崩铁)" OnContent="每日实训、委托派遣(崩铁)" Width="238" />
+                            <ToggleSwitch Margin="16,95,0,0" VerticalAlignment="Top" OffContent="体力" OnContent="体力" Width="160" />
+                            <ToggleSwitch Margin="16,132,0,0" VerticalAlignment="Top" OffContent="开拓力" OnContent="开拓力" Width="160" />
+                            <TextBlock Text="更新周期" Margin="16,171,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                            <ComboBox SelectedIndex="0" Margin="86,164,0,0" >
+                                <TextBlock Text="每30分钟"/>
+                                <TextBlock Text="每1小时"/>
+                                <TextBlock Text="每6小时"/>
+                            </ComboBox>
+                            <Button Width="280" Height="140" VerticalAlignment="Top" Margin="506,33,0,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0" AllowFocusOnInteraction="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" Visibility="Collapsed">
+                                <Button.Background>
+                                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                                </Button.Background>
+                                <Grid>
+                                    <TextBlock Text="崩坏3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock Text="小心海助手（磁贴预览）" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                                    <TextBlock Text="160/160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,34,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <TextBlock x:Name="SettingsAppearenceTitle3" Text="主页磁贴大小" Margin="17,434,0,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black" HorizontalAlignment="Left"/>
+                        <TextBlock Text="原神" Margin="17,481,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                        <ComboBox SelectedIndex="1" Margin="65,475,0,0" >
+                            <TextBlock Text="不显示"/>
+                            <TextBlock Text="中磁贴"/>
+                            <TextBlock Text="宽磁贴"/>
+                        </ComboBox>
+                        <TextBlock Text="崩坏:星穹铁道" Margin="17,528,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                        <ComboBox SelectedIndex="1" Margin="108,522,0,0" >
+                            <TextBlock Text="不显示"/>
+                            <TextBlock Text="中磁贴"/>
+                            <TextBlock Text="宽磁贴"/>
+                        </ComboBox>
+                        <TextBlock Text="崩坏三" Margin="249,481,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                        <ComboBox SelectedIndex="1" Margin="296,475,0,0" >
+                            <TextBlock Text="不显示"/>
+                            <TextBlock Text="中磁贴"/>
+                            <TextBlock Text="宽磁贴"/>
+                        </ComboBox>
+                        <TextBlock Text="主页设置磁贴" Margin="249,529,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                        <ComboBox SelectedIndex="1" Margin="348,523,0,0" >
+                            <TextBlock Text="不显示"/>
+                            <TextBlock Text="中磁贴"/>
+                            <TextBlock Text="宽磁贴"/>
+                        </ComboBox>
+                    </Grid>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="启动与更新">
+                <Grid>
+                    <TextBlock Text="启动位置" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                    <TextBlock Text="请导航到游戏本体位置，或导航到游戏安装目录。" Margin="16,53,16,0" VerticalAlignment="Top" Foreground="Black" FontSize="14"/>
+                    <TextBlock Text="原神安装位置" Margin="16,87,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                    <TextBox Text="%Application%\Genshin Impact\Genshin Impact Game\Yuanshen.exe" Height="35" Margin="114,79,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <Button Content="浏览..." Margin="619,79,0,0" VerticalAlignment="Top" Height="35" Width="60" />
+                    <TextBlock Text="崩三安装位置" Margin="16,127,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                    <TextBox Text="%Application%\Honkai Impact 3\Games\BH3.exe" Height="35" Margin="114,119,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <Button Content="浏览..." Margin="619,119,0,0" VerticalAlignment="Top" Height="35" Width="60" />
+                    <TextBlock Text="崩铁安装位置" Margin="16,167,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+                    <TextBox Text="%Application%\Star Rail\Game\StarRail.exe" Height="35" Margin="114,159,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <Button Content="浏览..." Margin="619,159,0,0" VerticalAlignment="Top" Height="35" Width="60" />
+                    <CheckBox Margin="16,199,0,0" VerticalAlignment="Top" Content="也通过该应用更新" />
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="账户与关联">
                 <Grid>
 
                 </Grid>
@@ -25,12 +103,8 @@
 
                 </Grid>
             </PivotItem>
-            <PivotItem Header="账户与关联">
-                <Grid>
 
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="版本与关于">
+            <PivotItem Header="关于此应用">
                 <Grid>
 
                 </Grid>

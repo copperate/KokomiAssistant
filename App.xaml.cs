@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Isolation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -72,7 +73,37 @@ namespace KokomiAssistant
                 Window.Current.Activate();
             }
         }
-
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                
+                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+                // TODO: Handle URI activation
+                // The received URI is eventArgs.Uri.AbsoluteUri
+                Frame rootFrame = Window.Current.Content as Frame;
+                if (rootFrame == null)
+                {
+                    rootFrame = new Frame();
+                    Window.Current.Content = rootFrame;
+                }
+                
+                
+                string schemehost = eventArgs.Uri.Scheme;
+                string localpath = eventArgs.Uri.AbsolutePath;
+                localpath = localpath.Substring(1);
+                if (schemehost == "mihoyobbs") 
+                {
+                    rootFrame.Navigate(typeof(SchemeRedirectPanel), eventArgs.Uri);
+                }
+                if (schemehost == "kokomiassistant")
+                {
+                    rootFrame.Navigate(typeof(MainPage),0);
+                }
+                Window.Current.Activate();
+                
+            }
+        }
         /// <summary>
         /// 导航到特定页失败时调用
         /// </summary>

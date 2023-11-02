@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="KokomiAssistant.SchemeRedirectPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid HorizontalAlignment="Left" Width="40" >
+            <Grid.Background>
+                <AcrylicBrush/>
+            </Grid.Background>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="40" Tapped="NavigateBackToHome" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" CornerRadius="20,20,20,20" ToolTipService.ToolTip="返回主页" Background="#00000000">
+                <Image Source="/Assets/StoreLogo.scale-100.png" Margin="4,4,4,4"/>
+            </Button>
+        </Grid>
+        <Grid Margin="40,0,0,0" >
+            <Frame x:Name="ContentFrameView" Content="Redirect"/>
+        </Grid>
+    </Grid>
+</Page>

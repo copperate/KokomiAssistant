@@ -7,9 +7,8 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="2b84f8b6-d397-4942-98cc-f1fdb927480d"
     Publisher="CN=copyerder"
-    Version="1.0.0.0" />
+    Version="1.0.0.0"  Name="TDocApp.KokomiAssistant"/>
 
   <mp:PhoneIdentity PhoneProductId="2b84f8b6-d397-4942-98cc-f1fdb927480d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -32,18 +31,39 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="KokomiAssistant.App">
       <uap:VisualElements
-        DisplayName="KokomiAssistant"
+        DisplayName="小心海助手"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="KokomiAssistant"
+        Description="Kokomi Assistant"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="小心海助手" Square71x71Logo="Assets\SmallTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png"/>
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mihoyobbs">
+            <uap:DisplayName>在“小心海助手”里打开“米游社”链接</uap:DisplayName>
+            <uap:Logo>Assets\Content\kokomi-icon.png</uap:Logo>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="kokomiassistant">
+            <uap:DisplayName>在“小心海助手”里打开链接</uap:DisplayName>
+            <uap:Logo>Assets\Content\kokomi-icon.png</uap:Logo>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="internetClientServer"/>
   </Capabilities>
 </Package>

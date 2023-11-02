@@ -9,6 +9,70 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Pivot Title="崩坏：星穹铁道社区">
+            <Pivot.RightHeader>
+                <CommandBar>
+                    <AppBarButton Icon="Zoom" Label="转到">
+                    </AppBarButton>
+                    <AppBarButton Icon="Filter" Label="筛选"/>
+                    <AppBarButton Icon="Add" Label="发布"/>
+                    <AppBarButton Icon="Refresh" Label="刷新"/>
+                </CommandBar>
+            </Pivot.RightHeader>
+            <PivotItem Header="发现">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="listViewDiscover" Height="Auto" Width="Auto" IsItemClickEnabled="True">
 
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="官方">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView Height="Auto" Width="Auto" 
+                          ItemsSource="">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="128">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding PostSummary}" VerticalAlignment="Top" Margin="10,84,212,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <Image HorizontalAlignment="Right" Margin="0,10,10,10" Source="{Binding PostPic}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="候车室">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="攻略">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="同人图">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="COS">
+                <Grid>
+
+                </Grid>
+            </PivotItem>
+
+        </Pivot>
     </Grid>
 </Page>

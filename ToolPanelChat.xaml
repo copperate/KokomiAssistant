@@ -9,6 +9,42 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <SplitView Name="VillaPane" IsPaneOpen="True"
+           DisplayMode="Inline"
+           OpenPaneLength="60">
+            <SplitView.Pane>
+                <Grid>
+                    <Button Name="VillaPaneControlButton" HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" Height="40" Tapped="VillaPaneControl" Tag="expand" >
+                        <Image Name="VillaPaneControlButtonImage" Source="/Assets/Content/Expand.png" Width="20" Height="20" />
+                    </Button>
+                    <TextBlock Text="Pane"
+                       FontSize="24"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+                </Grid>
+            </SplitView.Pane>
+            <Grid>
+                <SplitView Name="ChannelPane" IsPaneOpen="True"
+                    DisplayMode="Inline"
+                    OpenPaneLength="300" PaneBackground="#FFF9F9F9">
+                    <SplitView.Pane>
+                        <Grid>
+                            <DropDownButton Content="别野工具" Margin="0,0,40,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right"/>
+                            <TextBlock Text="别野名称"
+                               FontSize="24"
+                               VerticalAlignment="Top" Margin="10,40,10,0" Height="30"/>
+                            <Button x:Name="ChannelPaneControlButton" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="40" Tapped="ChannelPaneControl" >
+                                <Image x:Name="ChannelPaneControlButtonImage" Source="/Assets/Content/Collpsed.png" Width="20" Height="20" />
+                            </Button>
+                        </Grid>
+                    </SplitView.Pane>
+                    <Grid>
+                        <TextBlock Text="频道名称"
+                                   FontSize="24"
+                                   VerticalAlignment="Top" Margin="10,40,10,0"/>
+                    </Grid>
+                </SplitView>
+            </Grid>
+        </SplitView>
     </Grid>
 </Page>

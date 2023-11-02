@@ -90,5 +90,6 @@ namespace KokomiAssistant
                     .First(i => i.Tag.Equals(ContentFrame.SourcePageType.FullName.ToString()));
             }
         }
+        
     }
 }
