@@ -47,7 +47,7 @@
                             <Grid.Background>
                                 <AcrylicBrush TintColor="#CC0084FF"/>
                             </Grid.Background>
-                            <TextBlock x:Name="DetailUserLevel" Text="版区 Lv.0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <TextBlock x:Name="DetailUserLevel" Text="版区 Lv.0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTipService.ToolTip="{Binding Tag, ElementName=DetailUserLevel}" />
                         </Grid>
                     </ScrollViewer>
                     <Button Width="100" Height="100" VerticalAlignment="Top" Margin="16,68,48,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0">
@@ -127,7 +127,34 @@
         </Grid>
         <Grid Margin="500,0,0,0">
             <Pivot>
-                <PivotItem Header="帖子"></PivotItem>
+                <PivotItem Header="帖子与动态" Margin="0,0,0,0">
+                    <Grid>
+                        <Grid x:Name="UserListHideHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="180" Visibility="Collapsed">
+                            <Image Source="/Assets/Content/warning.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Height="160"/>
+                            <TextBlock Text="因对方设定，此项不可见。" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ScrollViewer x:Name="UserPostScrollView">
+                            <ListView x:Name="UserPostListView" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Tag="{Binding Tag}" Margin="0,10,0,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False" >
+                                            <Grid Margin="0,20,0,20" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <TextBlock Text="{Binding PublicDate_Month}" FontSize="36" FontFamily="Arial" Foreground="#FF6F6F6F" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,40,0"/>
+                                                <Line FocusVisualSecondaryBrush="{x:Null}" X2="30" Y1="40" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,20,0,0" Stroke="#FF6F6F6F" FocusVisualPrimaryBrush="{x:Null}"/>
+                                                <TextBlock Text="{Binding PublicDate_Day}" FontSize="36" FontFamily="Arial" Foreground="#FF6F6F6F" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,41,0,0" ></TextBlock>
+                                                <TextBlock Margin="0,80,0,0" Text="{Binding PublicDate_Year_Time}" Foreground="#FF6F6F6F" TextReadingOrder="UseFlowDirection" TextAlignment="Center"/>
+                                            </Grid>
+                                            <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,15,10,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding PostArea}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,50,0,0" FocusVisualPrimaryBrush="White" Foreground="#FF929292" FontSize="16" />
+                                            <TextBlock Text="{Binding PostSummery}" Margin="100,85,10,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" Width="{Binding Width, ElementName=grid}" VerticalAlignment="Top" />
+                                            <Image Margin="100,120,10,10" Source="{Binding UserPic}" Height="NaN" HorizontalAlignment="Left" VerticalAlignment="Top" MaxHeight="108"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
                 <PivotItem Header="评论"></PivotItem>
                 <PivotItem Header="收藏"></PivotItem>
                 <PivotItem Header="合集"></PivotItem>

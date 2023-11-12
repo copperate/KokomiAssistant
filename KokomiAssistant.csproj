@@ -122,12 +122,20 @@
     <Compile Include="GetDetailUserVilla.cs" />
     <Compile Include="GetPostDetail.cs" />
     <Compile Include="GetPostList.cs" />
+    <Compile Include="GetPostReplies.cs" />
     <Compile Include="GetUserDetail.cs" />
+    <Compile Include="GetUserPostList.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PostDetailPanel.xaml.cs">
       <DependentUpon>PostDetailPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PostViewMode\DocumentView.xaml.cs">
+      <DependentUpon>DocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PostViewMode\MultiPicView.xaml.cs">
+      <DependentUpon>MultiPicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemeRedirectPanel.xaml.cs">
@@ -183,13 +191,23 @@
     <Content Include="Assets\Content\Add_bg_Temp.png" />
     <Content Include="Assets\Content\bh3-case.png" />
     <Content Include="Assets\Content\bh3-tl.png" />
+    <Content Include="Assets\Content\check_in.png" />
+    <Content Include="Assets\Content\check_in_already.png" />
     <Content Include="Assets\Content\Collpsed.png" />
     <Content Include="Assets\Content\default_avatar.png" />
     <Content Include="Assets\Content\default_pendant.png" />
+    <Content Include="Assets\Content\divider_line_1.png" />
+    <Content Include="Assets\Content\divider_line_2.png" />
+    <Content Include="Assets\Content\divider_line_3.png" />
+    <Content Include="Assets\Content\divider_line_4.png" />
+    <Content Include="Assets\Content\example.jpg" />
     <Content Include="Assets\Content\Expand.png" />
     <Content Include="Assets\Content\Genshin-wish.png" />
     <Content Include="Assets\Content\kokomi-icon.png" />
+    <Content Include="Assets\Content\no_internet.png" />
+    <Content Include="Assets\Content\no_internet_2.png" />
     <Content Include="Assets\Content\starrail-wish.png" />
+    <Content Include="Assets\Content\warning.png" />
     <Content Include="Assets\Content\xt-tl.png" />
     <Content Include="Assets\Content\ys-tl.png" />
     <Content Include="Assets\game-logo\bh3-logo.jpg" />
@@ -242,6 +260,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PostViewMode\DocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PostViewMode\MultiPicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SchemeRedirectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -290,6 +316,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

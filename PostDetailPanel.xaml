@@ -11,19 +11,20 @@
     <Grid>
 
         <SplitView x:Name="DetailPanelSplit" IsPaneOpen="True"
-           OpenPaneLength="300" PanePlacement="Right" DisplayMode="Inline">
+           OpenPaneLength="350" PanePlacement="Right" DisplayMode="Inline">
             <Grid>
                 <TextBlock x:Name="PostTitle" Text="帖子标题"
                    Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
-                <WebView x:Name="PostContent" Margin="5,60,0,40" />
+                <WebView x:Name="PostContent" Margin="5,60,0,40" Visibility="Collapsed" />
                 <CommandBar VerticalAlignment="Bottom">
                     <AppBarButton x:Name="DetailPanelLikeContentButton" Label="点赞" Icon="Like" />
                     <AppBarButton x:Name="DetailPanelBookmarkContentButton" Label="收藏" Icon="OutlineStar" />
                     <AppBarButton x:Name="DetailPanelShareContentButton" Label="转发" Icon="Share" />
                     <AppBarSeparator />
-                    <AppBarButton Label="分享" Icon="Go" />
+                    <AppBarButton Label="分享" Icon="Go" Click="DetailPanelSharePostButton" />
                     <AppBarButton x:Name="DetailPanelControlButton" Label="收起侧栏" Icon="Forward" Click="DetailPanelControl"/>
                 </CommandBar>
+                <Frame x:Name="PostContentView" Content="" Margin="5,60,0,40"/>
             </Grid>
             <SplitView.Pane>
                 <Grid>
@@ -43,22 +44,48 @@
                         <TextBlock x:Name="DetailUserIntroduce" Text="珊瑚宫心海天下第一" VerticalAlignment="Top" Margin="100,73,10,0" FocusVisualPrimaryBrush="Black" Foreground="#FF757575" FontSize="11" />
                     </Grid>
                     <Pivot Margin="0,100,0,0">
-                        <PivotItem x:Name="CommentPivotItem" Header="评论">
+                        <PivotItem x:Name="CommentPivotItem" Header="评论" Margin="0,0,0,0">
                             <Grid>
                                 <Grid VerticalAlignment="Top">
                                     <Button Width="91" Height="33" Content="添加评论" />
-                                    <TextBlock Text="排序方式" VerticalAlignment="Top" Margin="78,7,0,0" Width="72" />
-                                    <ComboBox HorizontalAlignment="Right" SelectedIndex="0" >
+                                    <TextBlock Text="排序方式" VerticalAlignment="Top" Margin="78,7,62,0" Width="72" HorizontalAlignment="Right" />
+                                    <ComboBox HorizontalAlignment="Right" SelectedIndex="2" SelectionChanged="CommentSortChange" >
                                         <TextBlock Text="热门"/>
                                         <TextBlock Text="最早"/>
                                         <TextBlock Text="最新"/>
                                     </ComboBox>
                                 </Grid>
-                                
-                                <TextBlock Text="无法查看评论"
-                                           FontSize="24"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
+                                <ScrollViewer Margin="0,35,0,0">
+                                    <ListView x:Name="RepliesListView" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="0,0,0,0">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Tag="{Binding Tag}" Padding="5,5,5,5">
+                                                    <Grid VerticalAlignment="Top" Height="55" CornerRadius="10,10,0,0" Width="310">
+                                                        <Grid.Background>
+                                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                                <GradientStop Color="#FFB8E7FF"/>
+                                                                <GradientStop Color="#fff2f2f2" Offset="1"/>
+                                                            </LinearGradientBrush>
+                                                        </Grid.Background>
+                                                        <Ellipse Height="20" Width="20" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top">
+                                                            <Ellipse.Fill>
+                                                                <ImageBrush ImageSource="{Binding useravatar}" Stretch="UniformToFill"></ImageBrush>
+                                                            </Ellipse.Fill>
+                                                        </Ellipse>
+                                                        <TextBlock Text="{Binding username}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="16" />
+                                                        <TextBlock Text="{Binding floor}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" />
+                                                        <TextBlock Text="{Binding pubtime_likenum}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,35,0,0" />
+                                                        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#FF00B3FF" Height="25" Width="110" CornerRadius="10,0,0,10">
+                                                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White" Text="{Binding sub_reply_count}" Margin="0,0,3,0"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <TextBlock Text="{Binding replycontent}" Margin="0,60,0,0" FocusVisualPrimaryBrush="Black" Foreground="#FF333333" FontSize="16" Width="{Binding Width, ElementName=grid}" TextWrapping="Wrap" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollViewer>
+
                             </Grid>
                         </PivotItem>
                         <PivotItem Header="帖子详情">
