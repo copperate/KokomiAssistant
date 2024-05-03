@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KokomiAssistant"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -17,10 +17,12 @@
                     <Button Name="VillaPaneControlButton" HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" Height="40" Tapped="VillaPaneControl" Tag="expand" >
                         <Image Name="VillaPaneControlButtonImage" Source="/Assets/Content/Expand.png" Width="20" Height="20" />
                     </Button>
-                    <TextBlock Text="Pane"
-                       FontSize="24"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+                    <ListView Margin="0,40,0,0">
+                        <Grid>
+                            <TextBlock Text="别野名称" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Image Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/BindingPlatform/mibbs_icon.png" />
+                        </Grid>
+                    </ListView>
                 </Grid>
             </SplitView.Pane>
             <Grid>
@@ -36,15 +38,41 @@
                             <Button x:Name="ChannelPaneControlButton" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="40" Tapped="ChannelPaneControl" >
                                 <Image x:Name="ChannelPaneControlButtonImage" Source="/Assets/Content/Collpsed.png" Width="20" Height="20" />
                             </Button>
+                            <ListView Margin="0,80,0,0">
+                                <Grid>
+                                    <TextBlock Text="频道名称" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                                    <Image Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/comment.png" Margin="5,5,0,0" />
+                                </Grid>
+                            </ListView>
                         </Grid>
                     </SplitView.Pane>
                     <Grid>
                         <TextBlock Text="频道名称"
                                    FontSize="24"
                                    VerticalAlignment="Top" Margin="10,40,10,0"/>
+                        <ListView Margin="0,80,0,0">
+                            <Grid Margin="0,5,0,0">
+                                <Ellipse Height="40" Width="40" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="DetailUserImage" ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"></ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Text="深海舌鲆鱼" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,10,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="16" />
+                                <TextBlock Text="珊瑚宫心海天下第一" Margin="60,40,10,10" Foreground="#FF000000" FontSize="14" TextWrapping="Wrap" />
+                            </Grid>
+                        </ListView>
+                        <Grid VerticalAlignment="Bottom" Height="40" Background="#FFE6E6E6">
+                            <Button Height="33" Content="发送消息……" Margin="4,0,124,0" HorizontalContentAlignment="Left" BorderBrush="#FF919191" Background="#FFF7F7F7" Foreground="#FF636363" HorizontalAlignment="Stretch" />
+                            <AppBarButton HorizontalAlignment="Right" Icon="Send" Width="40" Height="40" />
+                            <AppBarButton HorizontalAlignment="Right" Icon="Emoji" Width="40" Height="40" Margin="0,0,40,0" />
+                            <AppBarButton HorizontalAlignment="Right" Icon="Account" Width="40" Height="40" Margin="0,0,80,0" />
+                        </Grid>
                     </Grid>
                 </SplitView>
             </Grid>
         </SplitView>
+        <Grid Name="VillaPcVersion" Visibility="Collapsed">
+            <my:WebView2 x:Name="InsideWebView" Margin="0,0,0,0" />
+        </Grid>
     </Grid>
 </Page>

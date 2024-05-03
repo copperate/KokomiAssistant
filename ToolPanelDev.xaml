@@ -9,6 +9,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <TextBlock x:Name="pageTitle" Text="开发工具" Margin="16" VerticalAlignment="Top" FontSize="24"/>
+        <Button VerticalAlignment="Top" Margin="10,76,0,0" Width="160" 
+        Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="52" Click="ButtonClicked">
+            <Button.Background>
+                <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+            </Button.Background>
+            <Grid>
+                <TextBlock Text="推送一条通知" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+            </Grid>
+        </Button>
     </Grid>
 </Page>

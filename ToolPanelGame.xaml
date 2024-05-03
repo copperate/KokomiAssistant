@@ -7,10 +7,95 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
-        <TextBlock x:Name="pageTitle" Text="游戏工具"
-                   Margin="16" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top"/>
-        
+        <ProgressBar x:Name="ProgressStatus" VerticalAlignment="Top" Height="4" Background="#00000000"/>
+        <ScrollViewer>
+            <Grid VerticalAlignment="Top" Padding="0,0,0,8">
+                <TextBlock x:Name="pageTitle" Text="游戏工具"
+                           Margin="16" VerticalAlignment="Top" FontSize="24"/>
+                <Grid Height="200" CornerRadius="10,10,10,10" Margin="16,64,16,0" VerticalAlignment="Top">
+                    <Image Source="/Assets/Content/ys-bg.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                    <Grid CornerRadius="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0">
+                        <Grid.Background>
+                            <AcrylicBrush TintColor="Transparent"/>
+                        </Grid.Background>
+                        <Image Source="/Assets/game-logo/ys-logo.jpg" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="原神" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                    </Grid>
+                    <GridView x:Name="GenshinToolPanelGrid" VerticalAlignment="Top" Margin="20,80,20,0" Padding="0,0,0,10" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemClick="ToolPanel_ItemClicked"  IsItemClickEnabled="True">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Tag="{Binding Tag}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,10,0" Width="80" Height="93">
+                                    <Image Source="{Binding ToolCover}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding ToolName}" Foreground="White" FontSize="16" Margin="0,70,0,0" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Height="200" CornerRadius="10,10,10,10" Margin="16,274,16,0" VerticalAlignment="Top">
+                    <Image Source="/Assets/Content/sr-bg.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                    <Grid CornerRadius="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0">
+                        <Grid.Background>
+                            <AcrylicBrush TintColor="Transparent"/>
+                        </Grid.Background>
+                        <Image Source="/Assets/game-logo/sr-logo.jpg" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="崩坏:星穹铁道" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                    </Grid>
+                    <GridView x:Name="StarrailToolPanelGrid" VerticalAlignment="Top" Margin="20,80,20,0" Padding="0,0,0,10" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ToolPanel_ItemClicked"  IsItemClickEnabled="True">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Tag="{Binding Tag}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,10,0" Width="80" Height="93">
+                                    <Image Source="{Binding ToolCover}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding ToolName}" Foreground="White" FontSize="16" Margin="0,70,0,0" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+
+                <Grid Height="200" CornerRadius="10,10,10,10" Margin="16,484,16,0" VerticalAlignment="Top">
+                    <Image Source="/Assets/Content/bh3-bg.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                    <Grid CornerRadius="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0">
+                        <Grid.Background>
+                            <AcrylicBrush TintColor="Transparent"/>
+                        </Grid.Background>
+                        <Image Source="/Assets/game-logo/bh3-logo.jpg" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="崩坏3" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                    </Grid>
+                    <GridView x:Name="Honkai3ToolPanelGrid" VerticalAlignment="Top" Margin="20,80,20,0" Padding="0,0,0,10" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ToolPanel_ItemClicked"  IsItemClickEnabled="True">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Tag="{Binding Tag}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,10,0" Width="80" Height="93">
+                                    <Image Source="{Binding ToolCover}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding ToolName}" Foreground="White" FontSize="16" Margin="0,70,0,0" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+
+                <Grid Height="200" CornerRadius="10,10,10,10" Margin="16,694,16,0" VerticalAlignment="Top">
+                    <Image Source="/Assets/Content/zzz-bg.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                    <Grid CornerRadius="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0">
+                        <Grid.Background>
+                            <AcrylicBrush TintColor="Transparent"/>
+                        </Grid.Background>
+                        <Image Source="/Assets/game-logo/zzz-logo.png" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="绝区零" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                    </Grid>
+                    <GridView x:Name="ZenZeroToolPanelGrid" VerticalAlignment="Top" Margin="20,80,20,0" Padding="0,0,0,10" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ToolPanel_ItemClicked"  IsItemClickEnabled="True">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Tag="{Binding Tag}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,10,0" Width="80" Height="93">
+                                    <Image Source="{Binding ToolCover}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding ToolName}" Foreground="White" FontSize="16" Margin="0,70,0,0" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

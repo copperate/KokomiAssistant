@@ -72,6 +72,12 @@ namespace KokomiAssistant
             FollowingNumText.Text=Data.data.user_info.achieve.follow_cnt.ToString();
             FollowerNumText.Text = Data.data.user_info.achieve.followed_cnt.ToString();
             LikeNumText.Text=Data.data.user_info.achieve.like_num.ToString();
+            if (Data.data.user_silence_status != 0)
+            {
+                UserStatus.Visibility = Visibility.Visible;
+                UserStatus.Tag=Data.data.user_silence_reason.ToString();
+            }
+            else UserStatus.Visibility = Visibility.Collapsed;
             
             if(Data.data.user_info.community_info.user_func_status.show_self_created_villa== "SHOW_SELF_CREATED_VILLA_STATUS_PUBLIC")
             {
@@ -146,7 +152,7 @@ namespace KokomiAssistant
         {
             List<UserPostListViewContentPost> listdata = new List<UserPostListViewContentPost>();
             int list_num = data.data.list.Count();
-            DateTime dt = new DateTime(1970, 1, 1);
+            DateTime dt = new DateTime(1970, 1, 1, 8, 0, 0);
             for(int qi = 0;qi < list_num;qi++)
             {
                 switch(data.data.list[qi].entity_type)
@@ -166,7 +172,7 @@ namespace KokomiAssistant
                     case 2:
                         listdata.Add(new UserPostListViewContentPost()
                         {
-                            Tag = data.data.list[qi].entity_id,
+                            Tag = "t"+data.data.list[qi].entity_id,
                             PostTitle = "发布了一条动态",
                             PostSummery = data.data.list[qi].instant.instant.content,
                             PostArea = "动态[当前版本不支持查看详情]",
@@ -189,7 +195,11 @@ namespace KokomiAssistant
             String postID;
             dynamic clickedItem = e.ClickedItem;
             postID = (string)clickedItem.Tag;
-            Frame.Navigate(typeof(PostDetailPanel), postID);
+            if (String.Equals(postID[0],'t'))
+            {
+                
+            }
+            else Frame.Navigate(typeof(PostDetailPanel), postID);
             //}
         }
         public string areaget(string areaid)

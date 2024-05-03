@@ -4,6 +4,8 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using static System.Net.Mime.MediaTypeNames;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -33,11 +36,25 @@ namespace KokomiAssistant
             string schemehost = eventargs.Scheme;
             string localpath = eventargs.AbsolutePath;
             localpath = localpath.Substring(1);
-            if (eventargs.Host == "article") { ContentFrameView.Navigate(typeof(PostDetailPanel), localpath); }
-            if (eventargs.Host == "user") { ContentFrameView.Navigate(typeof(UserDetailPanel), localpath); }
+            //base.OnNavigatedTo(e);
+            if (eventargs.Host == "article") {
+                ContentFrameView.Navigate(typeof(PostDetailPanel), localpath);
+            }
+            if (eventargs.Host == "user") {
+                ContentFrameView.Navigate(typeof(UserDetailPanel), localpath); 
+            }
             if (eventargs.Host == "home") { ContentFrameView.Navigate(typeof(StatusPanel), localpath); }
-            if (eventargs.Host == "webview") { ContentFrameView.Content = eventargs.Query.Substring(1); }
-            
+            if (eventargs.Host == "webview") { //ContentFrameView.Content = eventargs.Query.Substring(1);
+                string text = eventargs.Query.Substring(6);
+                string uri = System.Web.HttpUtility.UrlDecode(text, System.Text.Encoding.UTF8);
+                ContentFrameView.Navigate(typeof(ToolPanelInsideWebView), uri);
+            }
+            if (eventargs.Host == "openurl") {
+                string text = eventargs.Query.Substring(5);
+                string uri = System.Web.HttpUtility.UrlDecode(text, System.Text.Encoding.UTF8);
+                ContentFrameView.Navigate(typeof(ToolPanelInsideWebView), uri);
+            }
+
 
             /*if (e.Parameter is string && !string.IsNullOrWhiteSpace((string)e.Parameter))
             {
@@ -47,8 +64,8 @@ namespace KokomiAssistant
             {
 
             }*/
-            //base.OnNavigatedTo(e);
             
+
         }
         private void NavigateBackToHome(object sender, TappedRoutedEventArgs e)
         {
@@ -58,6 +75,31 @@ namespace KokomiAssistant
         private void Navigate(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+
+        private void SchemeRedirectBackbutton_clicked(object sender, RoutedEventArgs e)
+        {
+            try { ContentFrameView.GoBack(); } catch { Frame.Navigate(typeof(MainPage)); }
+        }
+
+        private void NotifyPanel_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async void NotifyPane_Activated(string message)
+        {
+            //NotifyPane.Height = 0;
+            NotifyPane.Visibility = Visibility.Visible;
+            NotifyDetail.Text = message;
+            //for (int i = 1; i <= 1200; i++)if (i % 30 == 0) NotifyPane.Height++;
+            var result = await PaneClose();
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async Task<string> PaneClose()
+        {
+            return await Task.Run(() => {
+                Thread.Sleep(5000); return "";
+            });
         }
     }
 }

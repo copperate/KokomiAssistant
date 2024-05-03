@@ -12,11 +12,18 @@
         <Grid Width="500" HorizontalAlignment="Left">
             <TextBlock x:Name="pageTitle" Text="用户详情"
                    Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black" HorizontalAlignment="Left"/>
-            <Grid x:Name="DetailUserIDLabel" Margin="0,19,16,0" VerticalAlignment="Top" CornerRadius="5,5,5,5" HorizontalAlignment="Right">
+            <Grid x:Name="DetailUserIDLabel" Margin="0,19,16,0" VerticalAlignment="Top" CornerRadius="5,5,5,5" HorizontalAlignment="Right" ToolTipService.ToolTip="用户ID，点击以拷贝。">
                 <Grid.Background>
                     <AcrylicBrush TintColor="#CCFF4600"/>
                 </Grid.Background>
                 <TextBlock x:Name="DetailUserID" Text="ID:70291145" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,5" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+            </Grid>
+            <Grid x:Name="UserStatus" Margin="0,53,16,0" VerticalAlignment="Top" CornerRadius="5,5,5,5" HorizontalAlignment="Right" ToolTipService.ToolTip="{Binding Tag, ElementName=UserStatus}" >
+                <Grid.Background>
+                    <AcrylicBrush TintColor="#CCFF0000"/>
+                </Grid.Background>
+                <AppBarButton Icon="BlockContact" Width="30" Height="40" Foreground="White" Margin="0,-5,0,-10" />
+                <TextBlock Text="禁言中" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,5,5" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14"/>
             </Grid>
             <Grid VerticalAlignment="Top" Height="100" Margin="16,53,16,0">
                 <Ellipse Height="80" Width="80" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
@@ -47,7 +54,7 @@
                             <Grid.Background>
                                 <AcrylicBrush TintColor="#CC0084FF"/>
                             </Grid.Background>
-                            <TextBlock x:Name="DetailUserLevel" Text="版区 Lv.0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTipService.ToolTip="{Binding Tag, ElementName=DetailUserLevel}" />
+                            <TextBlock x:Name="DetailUserLevel" Text="版区 Lv.0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTipService.ToolTip="{Binding Tag, ElementName=DetailUserLevel}" TextTrimming="CharacterEllipsis" />
                         </Grid>
                     </ScrollViewer>
                     <Button Width="100" Height="100" VerticalAlignment="Top" Margin="16,68,48,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0">
@@ -127,7 +134,7 @@
         </Grid>
         <Grid Margin="500,0,0,0">
             <Pivot>
-                <PivotItem Header="帖子与动态" Margin="0,0,0,0">
+                <PivotItem Header="时间线" Margin="0,0,0,0">
                     <Grid>
                         <Grid x:Name="UserListHideHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="180" Visibility="Collapsed">
                             <Image Source="/Assets/Content/warning.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Height="160"/>

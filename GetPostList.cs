@@ -12,16 +12,16 @@ namespace KokomiAssistant
 {
     class PostList
     {
-        public async static Task<RootObject> GetPostList(int channelID,int pageNum,int sortType)
+        public async static Task<RootObject> GetPostList(int channelID,int sortType,string lastid)
         {
             Uri uri;
             if (sortType == 3)
             {
-                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getForumPostList?forum_id=" + channelID + "&is_good=false&is_hot=true&page_size=20&sort_type=&page=" + pageNum);
+                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getForumPostList?forum_id=" + channelID + "&is_good=false&is_hot=true&page_size=20&sort_type=&last_id=" + lastid);
             }
             else
             {
-                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getForumPostList?forum_id=" + channelID + "&is_good=false&is_hot=false&page_size=20&sort_type=" + sortType + "&page=" + pageNum);
+                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getForumPostList?forum_id=" + channelID + "&is_good=false&is_hot=false&page_size=20&sort_type=" + sortType + "&last_id=" + lastid);
             }
             HttpClient client = new HttpClient();
             var headers = client.DefaultRequestHeaders;
@@ -239,7 +239,7 @@ namespace KokomiAssistant
         [DataMember]
         public bool is_in_profit { get; set; }
         [DataMember]
-        public int updated_at { get; set; }
+        public Int64 updated_at { get; set; }
         [DataMember]
         public int deleted_at { get; set; }
         [DataMember]

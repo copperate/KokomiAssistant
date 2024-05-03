@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Publisher="CN=copyerder"
-    Version="1.0.0.0"  Name="TDocApp.KokomiAssistant"/>
+    Publisher="CN=copperate"
+    Version="0.1.3.0"  Name="TDocApp.KokomiAssistant"/>
 
   <mp:PhoneIdentity PhoneProductId="2b84f8b6-d397-4942-98cc-f1fdb927480d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>KokomiAssistant</DisplayName>
-    <PublisherDisplayName>copyerder</PublisherDisplayName>
+    <PublisherDisplayName>copperate</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -34,7 +34,7 @@
         DisplayName="小心海助手"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Kokomi Assistant"
+        Description="Kokomi Assistant Preview"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="小心海助手" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
@@ -42,7 +42,7 @@
             <uap:ShowOn Tile="wide310x150Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#26236b"/>
         <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png"/>
       </uap:VisualElements>
       <Extensions>

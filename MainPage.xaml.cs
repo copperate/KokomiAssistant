@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,17 +25,20 @@ namespace KokomiAssistant
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //String iks = "KokomiAssistant.";
+        public static MainPage navPage;
         public MainPage()
         {
             this.InitializeComponent();
+            navPage = this;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         private void NaviView_Loaded(object sender, RoutedEventArgs e)
         {
-           ContentFrame.Navigated += On_Navigated;
+            ContentFrame.Navigated += On_Navigated;
             NaviView.SelectedItem = NaviView.MenuItems[0];
             NaviView_Navigate(typeof(StatusPanel),new EntranceNavigationTransitionInfo());
+            
         }
 
         private void NaviView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -52,7 +57,7 @@ namespace KokomiAssistant
             }
         }
 
-        private void NaviView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        public void NaviView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             TryGoBack();
         }
@@ -64,7 +69,7 @@ namespace KokomiAssistant
                 ContentFrame.Navigate(navPageType, null, transitionInfo);
             }
         }
-        private bool TryGoBack()
+        public bool TryGoBack()
         {
             if(!ContentFrame.CanGoBack)
             {
@@ -90,6 +95,26 @@ namespace KokomiAssistant
                     .First(i => i.Tag.Equals(ContentFrame.SourcePageType.FullName.ToString()));
             }
         }
-        
+
+        private void NotifyPanel_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async void NotifyPane_Activated(string message)
+        {
+            //NotifyPane.Height = 0;
+            NotifyPane.Visibility = Visibility.Visible;
+            NotifyDetail.Text = message;
+            //for (int i = 1; i <= 1200; i++)if (i % 30 == 0) NotifyPane.Height++;
+            var result = await PaneClose();
+            NotifyPane.Visibility = Visibility.Collapsed; 
+        }
+        public async Task<string> PaneClose()
+        {
+            return await Task.Run(() => { 
+                Thread.Sleep(5000);  return ""; 
+            });
+        }
+
     }
 }

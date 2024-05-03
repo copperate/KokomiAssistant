@@ -9,18 +9,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Pivot Title="应用设定" FontSize="11">
-            <PivotItem Header="外观与主页">
+        <Pivot Title="设定" FontSize="11">
+            <PivotItem Header="外观&amp;主页">
                 <ScrollViewer>
                     <Grid>
                         <TextBlock x:Name="SettingsAppearenceTitle1" Text="主页背景" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
-                        <GridView Name="SettingAppearenceBackgroundChooseGrid" VerticalAlignment="Top" Margin="16,60,16,0" Height="100" Loaded="SettingAppearenceBackgroundLoad" IsMultiSelectCheckBoxEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectionChanged="SettingAppearenceBackgroundSet">
+                        <GridView Name="SettingAppearenceBackgroundChooseGrid" VerticalAlignment="Top" Margin="16,60,16,0" Height="100" Loaded="SettingAppearenceBackgroundLoad" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectionChanged="SettingAppearenceBackgroundSet">
                             <Image Source="/Assets/Background/Wallpaper01.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="0" />
                             <Image Source="/Assets/Background/DefaultHonkaiWallpaper.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="1" />
                             <Image Source="/Assets/Background/DefaultStarrailWallpaper.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="2" />
                             <Image Source="/Assets/Background/DefaultGenshinWallpaper.jpg" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="3" />
                             <Image Name="Custombg" Source="/Assets/Content/Add_bg_Temp.png" Width="200" Height="100" HorizontalAlignment="Left" Stretch="UniformToFill" Tag="4" />
                         </GridView>
+
                         <Button VerticalAlignment="Top" Margin="16,170,0,0" Height="29" Width="104" Content="自定义背景……" Click="SettingsAppearenceBackgroundsSetButton" />
                         <Grid Margin="0,218,0,0" VerticalAlignment="Top">
                             <TextBlock x:Name="SettingsAppearenceTitle2" Text="动态磁贴" Margin="16,0,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black" HorizontalAlignment="Left"/>
@@ -77,38 +78,107 @@
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Header="启动与更新">
+            <PivotItem Header="速览&amp;捷径">
                 <Grid>
-                    <TextBlock Text="启动位置" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
-                    <TextBlock Text="请导航到游戏本体位置，或导航到游戏安装目录。" Margin="16,53,16,0" VerticalAlignment="Top" Foreground="Black" FontSize="14"/>
+                    <TextBlock Text="应用位置" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                    <TextBlock Text="请导航到游戏本体位置。" Margin="16,53,16,0" VerticalAlignment="Top" Foreground="Black" FontSize="14"/>
                     <TextBlock Text="原神安装位置" Margin="16,87,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
-                    <TextBox Text="%Application%\Genshin Impact\Genshin Impact Game\Yuanshen.exe" Height="35" Margin="114,79,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
-                    <Button Content="浏览..." Margin="619,79,0,0" VerticalAlignment="Top" Height="35" Width="60" />
+                    <TextBox x:Name="AppLocationGenshin" Text="%Application%\Genshin Impact\Genshin Impact Game\Yuanshen.exe" Height="35" Margin="114,79,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <Button Content="浏览..." Margin="619,79,0,0" VerticalAlignment="Top" Height="35" Width="60" Click="AppLocation_Genshin_BrowseButton" />
                     <TextBlock Text="崩三安装位置" Margin="16,127,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
-                    <TextBox Text="%Application%\Honkai Impact 3\Games\BH3.exe" Height="35" Margin="114,119,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <TextBox x:Name="AppLocationHonkai3" Text="%Application%\Honkai Impact 3\Games\BH3.exe" Height="35" Margin="114,119,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
                     <Button Content="浏览..." Margin="619,119,0,0" VerticalAlignment="Top" Height="35" Width="60" />
                     <TextBlock Text="崩铁安装位置" Margin="16,167,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
-                    <TextBox Text="%Application%\Star Rail\Game\StarRail.exe" Height="35" Margin="114,159,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
+                    <TextBox x:Name="AppLocationStarrail" Text="%Application%\Star Rail\Game\StarRail.exe" Height="35" Margin="114,159,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" />
                     <Button Content="浏览..." Margin="619,159,0,0" VerticalAlignment="Top" Height="35" Width="60" />
-                    <CheckBox Margin="16,199,0,0" VerticalAlignment="Top" Content="也通过该应用更新" />
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="账户与关联">
-                <Grid>
+                    <CheckBox Margin="16,199,0,0" VerticalAlignment="Top" Content="也通过 小心海助手 更新游戏" />
+
 
                 </Grid>
             </PivotItem>
-            <PivotItem Header="社区与评论">
+            <PivotItem Header="用户&amp;关联">
                 <Grid>
-
+                    <TextBlock Text="已登录用户" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                    <ListView VerticalAlignment="Top" Margin="16,53,16,0" Height="220">
+                        <Grid>
+                            <Ellipse Height="50" Width="50" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"></ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Text="深海舌鲆鱼" Margin="70,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBlock x:Name="DetailUserLevel" Text="本地用户" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,39,0,0" FocusVisualPrimaryBrush="Black" Foreground="#FF5F5F5F" FontSize="11" />
+                        </Grid>
+                    </ListView>
+                    <TextBlock Text="关联新用户" Margin="16,273,22,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                    <Button Margin="16,310,0,0" VerticalAlignment="Top" Background="#FF66E0FF" Padding="0,0,0,0" Width="200" HorizontalContentAlignment="Left">
+                        <Grid>
+                            <Image Source="/Assets/BindingPlatform/mibbs_icon.png" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBlock Text="登入 米哈游通行证" FontSize="14" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="Black"/>
+                        </Grid>
+                    </Button>
+                    <Button Margin="221,310,0,0" VerticalAlignment="Top" Background="#FF00A0FF" Padding="0,0,0,0" Width="200" HorizontalContentAlignment="Left">
+                        <Grid>
+                            <Image Source="/Assets/BindingPlatform/jabbr_icon.png" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBlock Text="登入 Jabbr" FontSize="14" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="浏览&amp;功能">
+                <Grid>
+                    <TextBlock Text="浏览" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                    <ToggleSwitch Margin="16,58,0,0" VerticalAlignment="Top" OffContent="兼容模式(关)" OnContent="兼容模式(开)" Width="160" UseSystemFocusVisuals="True" />
+                    <TextBlock Text="兼容模式仅在访问帖子时、应用不断闪退时启用，此开关开启后将使用网页方法拉取与显示帖子；此表征证明米游社采取了新访问方式、或启用了新功能，请启用后将此情况迅速反馈给开发者。" Margin="20,90,10,0" VerticalAlignment="Top" FontWeight="Normal" Foreground="#FF5B5B5B" FontSize="14" FontStyle="Italic" TextWrapping="Wrap"/>
+                    <ToggleSwitch x:Name="BrowsePage_Blocksettingswitch" Margin="16,128,0,0" VerticalAlignment="Top" OffContent="关键词屏蔽(关)" OnContent="关键词屏蔽(开)" Width="160" UseSystemFocusVisuals="True" Toggled="BrowsePage_BlockSwitch" />
+                    <TextBlock Text="含关键词的帖子、评论与用户不会显示在应用中。" Margin="19,160,11,0" VerticalAlignment="Top" FontWeight="Normal" Foreground="#FF5B5B5B" FontSize="14" FontStyle="Italic" TextWrapping="Wrap"/>
+                    <Grid x:Name="BlockSettingsGrid" Margin="20,180,20,0" Opacity="0.5" VerticalAlignment="Top">
+                        <TextBlock x:Name="BrowsePage_BlockwordsListTitle" Text="已启用关键词 (5)" Margin="0,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
+                        <ListView x:Name="BrowsePage_BlockwordsList" Margin="0,27,0,0" Background="#00000000" BorderBrush="#FF353535" BorderThickness="1,1,1,1" VerticalAlignment="Top" Height="150">
+                            <Grid>
+                                <AppBarButton Icon="Cancel" Width="40" Height="40" Margin="-10,-10,-10,-10" />
+                                <TextBlock Text="明日方舟" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </Grid>
+                            <Grid>
+                                <AppBarButton Icon="Cancel" Width="40" Height="40" Margin="-10,-10,-10,-10" />
+                                <TextBlock Text="方舟" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </Grid>
+                            <Grid>
+                                <AppBarButton Icon="Cancel" Width="40" Height="40" Margin="-10,-10,-10,-10" />
+                                <TextBlock Text="散兵" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </Grid>
+                            <Grid>
+                                <AppBarButton Icon="Cancel" Width="40" Height="40" Margin="-10,-10,-10,-10" />
+                                <TextBlock Text="流浪者" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </Grid>
+                            <Grid>
+                                <AppBarButton Icon="Cancel" Width="40" Height="40" Margin="-10,-10,-10,-10" />
+                                <TextBlock Text="散宝" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </Grid>
+                        </ListView>
+                        <TextBox x:Name="AddblockwordTextbox" Height="32" VerticalAlignment="Top" Margin="0,180,0,0" Width="300" HorizontalAlignment="Left"></TextBox>
+                        <Button Content="添加关键词" VerticalAlignment="Top" Margin="305,180,0,0" Tapped="BrowsePage_AddBlockword"></Button>
+                        <Button Content="清空列表" VerticalAlignment="Top" Margin="400,180,0,0" Tapped="BrowsePage_ClearBlockword"></Button>
+                    </Grid>
                 </Grid>
             </PivotItem>
 
             <PivotItem Header="关于此应用">
                 <Grid>
-
+                    <TextBlock Text="版本信息" Margin="16,16,16,0" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black" FontSize="24"/>
+                    <Image Source="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="80" Margin="24,65,0,0"/>
+                    <TextBlock Text="小心海助手" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="109,76,0,0" FontSize="22" />
+                    <TextBlock Text="版本 0.1.3.1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="109,110,0,0" FontSize="18" />
+                    <TextBlock Text="在Github上浏览该项目" TextDecorations="Underline" FontSize="14" Margin="24,162,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0090FF" Tapped="Aboutpage_SourceLink"/>
+                    <Button Content="打开数据文件夹..." Margin="24,198,0,0" VerticalAlignment="Top" Click="AboutpageOpenDataFolderBtn" />
                 </Grid>
             </PivotItem>
         </Pivot>
+        <Grid Height="0" VerticalAlignment="Top">
+            <Grid.Background>
+                <AcrylicBrush TintColor="Transparent"/>
+            </Grid.Background>
+
+        </Grid>
     </Grid>
 </Page>

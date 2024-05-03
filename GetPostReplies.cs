@@ -11,16 +11,16 @@ namespace KokomiAssistant
 {
     class GetPostReplies
     {
-        public async static Task<RepliesObjectRoot> GetPostList(int postID,int ordertype, bool masteronly)
+        public async static Task<RepliesObjectRoot> GetPostList(int postID,int ordertype, bool masteronly,string lastid)
         {
             Uri uri;
-            if (ordertype == 3) 
+            if (ordertype == 0) 
             {
-                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getPostReplies?post_id=" + postID + "&order_type=1&size=50&only_master=false&last_id=&is_hot=true&from_external_link=false");
+                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getPostReplies?post_id=" + postID + "&size=50&only_master=false&last_id="+lastid+"&is_hot=true&from_external_link=false");
             }
             else
             {
-                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getPostReplies?post_id="+postID+"&order_type="+ordertype+"&size=50&only_master=false&last_id=&is_hot=false&from_external_link=false");
+                uri = new Uri("https://api-takumi.miyoushe.com/post/api/getPostReplies?post_id="+postID+"&order_type="+ordertype+ "&size=50&only_master=false&last_id="+lastid+"&is_hot=false&from_external_link=false");
             }
             HttpClient client = new HttpClient();
             var headers = client.DefaultRequestHeaders;
@@ -73,7 +73,7 @@ namespace KokomiAssistant
         public List<SubReply> sub_replies { get; set; }
         public bool is_lz { get; set; }
         public int sub_reply_count { get; set; }
-        public object r_user { get; set; }
+        public RUser r_user { get; set; }
         public object r_reply { get; set; }
         public object r_post { get; set; }
     }
@@ -99,7 +99,7 @@ namespace KokomiAssistant
         public int delete_src { get; set; }
         public int created_at { get; set; }
         public int updated_at { get; set; }
-        public object deleted_at { get; set; }
+        public Int64 deleted_at { get; set; }
         public string struct_content { get; set; }
         public List<object> structured_content_rows { get; set; }
         public bool is_top { get; set; }

@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page xmlns:my="using:Microsoft.UI.Xaml.Controls" 
     x:Class="KokomiAssistant.ToolPanelAssistant"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,6 +9,59 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <TextBlock x:Name="pageTitle" Text="助手工具" Margin="16,16,93,16" VerticalAlignment="Top" FontSize="24"/>
+        <AppBarButton HorizontalAlignment="Right" Margin="0,16,10,0" Label="编辑或添加..." Width="82" Icon="Edit">
+            <MenuFlyout>
+                <MenuFlyoutItem Text="添加工具..."/>
+                <MenuFlyoutItem Text="编辑工具..."/>
+            </MenuFlyout>
+        </AppBarButton>
+        <GridView Margin="0,60,0,0" Padding="16,16,16,16">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" 
+                    Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="160">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="20" Width="20" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/Content/kokomi-icon.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="小心海助手" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="35,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                    <TextBlock Text="抽卡记录分析" Margin="10,10,10,30" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="20" TextWrapping="Wrap" />
+                </Grid>
+            </Button>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" Width="160" 
+        Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="160">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="20" Width="20" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/Content/kokomi-icon.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="小心海助手" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="35,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                    <TextBlock Text="七圣召唤（体验版）" Margin="10,10,10,30" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="20" TextWrapping="Wrap" />
+                </Grid>
+            </Button>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" Width="160" 
+Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="160">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="20" Width="20" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/BindingPlatform/jabbr_icon.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="Jabbr" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="35,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="14" />
+                    <TextBlock Text="GroupCall" Margin="10,10,10,30" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="20" TextWrapping="Wrap" />
+                </Grid>
+            </Button>
+        </GridView>
     </Grid>
 </Page>

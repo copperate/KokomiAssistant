@@ -1,0 +1,40 @@
+﻿<Page xmlns:my="using:Microsoft.UI.Xaml.Controls" 
+    x:Class="KokomiAssistant.ToolPanelInsideWebView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <my:WebView2 x:Name="InsideWebView" Margin="0,40,0,0" />
+        <Grid Height="40" VerticalAlignment="Top">
+            <Grid.Background>
+                <AcrylicBrush/>
+            </Grid.Background>
+            <AppBarButton Icon="Back" Width="40" Click="InsideViewButton_back" />
+            <AppBarButton Icon="Forward" Width="40" Margin="40,0,0,0" Click="InsideViewButton_forward" />
+            <AppBarButton Icon="Sync" Width="40" Margin="80,0,0,0" Click="InsideViewButton_refresh"/>
+            <TextBox x:Name="InsideViewAddressBar" Text="Page" Margin="120,5,85,5" Padding="5,5,5,5" HorizontalContentAlignment="Left" FontSize="14" BorderThickness="0,0,0,0"/>
+            <AppBarButton Icon="Share" HorizontalAlignment="Right" Width="40" Margin="0,0,40,0"/>
+            <Button Width="40" Height="40" HorizontalAlignment="Right" Padding="10,10,10,10" BorderThickness="0,0,0,0">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/Content/loadmore.png" Stretch="None" AlignmentX="Center">
+                        <ImageBrush.RelativeTransform>
+                            <CompositeTransform CenterY="0.5" CenterX="0.5" ScaleX="0.6" ScaleY="0.6"/>
+                        </ImageBrush.RelativeTransform>
+                    </ImageBrush>
+                </Button.Background>
+                <Button.Flyout>
+                    <Flyout AllowFocusOnInteraction="True">
+                        <Grid>
+                            <ToggleSwitch IsOn="True" OnContent="作为应用访问" OffContent="作为浏览器访问" Toggled="BrowserViewmodeChanged" />
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+        <ProgressBar x:Name="LoadProgress" VerticalAlignment="Top" Background="#00000000"/>
+    </Grid>
+</Page>

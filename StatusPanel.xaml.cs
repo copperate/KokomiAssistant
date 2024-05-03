@@ -46,5 +46,18 @@ namespace KokomiAssistant
             StatusPanelBackground.Source = new BitmapImage(new Uri(selectedIndex));
             
         }
+
+        private void Gamestart_Genshin(object sender, RoutedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            try
+            {
+                System.Diagnostics.Process.Start(localSettings.Values["AppLocationGenshin"] as string);
+            }
+            catch
+            {
+                ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("运行失败，请检查设置。");
+            }
+        }
     }
 }

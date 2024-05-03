@@ -149,6 +149,10 @@ namespace KokomiAssistant
         public UserCustomerService customer_service { get; set; }
         [DataMember]
         public UserAuditInfo audit_info { get; set; }
+        [DataMember]
+        public int user_silence_status { get; set; }
+        [DataMember]
+        public string user_silence_reason { get; set; }
     }
 
     [DataContract]

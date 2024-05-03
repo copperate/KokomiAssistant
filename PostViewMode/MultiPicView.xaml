@@ -11,13 +11,12 @@
     <Grid>
         <ScrollViewer>
             <Grid>
-                <TextBlock x:Name="PicViewDescribe" Margin="10,10,10,0" TextWrapping="Wrap" Text="这是图片描述" VerticalAlignment="Top"/>
-                <ListView x:Name="ImglistView" Height="Auto" Width="Auto" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None" 
-                          Margin="0,50,0,0">
+                <ListView x:Name="ImglistView" Height="Auto" Width="Auto" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:Name="picview">
                             <Grid Padding="10,10,10,10">
-                                <Image Source="{Binding ImageSource}" Stretch="UniformToFill"/>
+                                <TextBlock Text="{Binding Describe}" TextWrapping="Wrap" FontSize="14"></TextBlock>
+                                <Image Tag="{Binding ImageSource}" Source="{Binding ImageSource}" Stretch="UniformToFill" Tapped="MultiPicViewPic_Tapped"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="KokomiAssistant.SocialSearchPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Image Source="/Assets/Content/kokomi-bg.png" Opacity="0.2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" IsTapEnabled="False" MinWidth="720" MinHeight="396" Margin="300,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <ProgressBar x:Name="ProgressBarA" Height="5" VerticalAlignment="Top" Background="Transparent" Margin="10,50,10,0"/>
+        <TextBox x:Name="SearchWordTextBox" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="输入关键词……" Height="40" FontSize="14" BorderThickness="1,1,1,1" Padding="10,9,70,9" KeyDown="SearchWordTextbox_Keydown"/>
+        <AppBarButton Icon="Zoom" Margin="0,10,10,0" Height="40" Width="70" HorizontalAlignment="Right" Click="SearchButtonClicked"/>
+        <Pivot x:Name="SearchPivot" Margin="0,55,0,0">
+            <PivotItem Header="帖子" Margin="0,0,0,0">
+                <ScrollViewer>
+                    <Grid>
+                        <TextBlock Text="筛选方式" VerticalAlignment="Top" Margin="10,7,0,0" HorizontalAlignment="Left" />
+                        <ComboBox x:Name="ListSortTypeCombobox" SelectedIndex="2" Margin="71,0,0,0" SelectionChanged="ListSortTypeChange">
+                            <ComboBoxItem Visibility="Collapsed"></ComboBoxItem>
+                            <TextBlock Text="按热度"/>
+                            <TextBlock Text="按时间"/>
+                        </ComboBox>
+                        <ComboBox x:Name="ListSortAreaCombobox" SelectedIndex="0" Margin="162,0,0,0" SelectionChanged="ListSortTypeChange" Width="128">
+                            <TextBlock Text="全部分区"/>
+                            <TextBlock Text="崩坏三"/>
+                            <TextBlock Text="原神"/>
+                            <TextBlock Text="崩坏学园二"/>
+                            <TextBlock Text="未定事件簿"/>
+                            <TextBlock Text="大别野"/>
+                            <TextBlock Text="崩坏星穹铁道"/>
+                            <ComboBoxItem Visibility="Collapsed"/>
+                            <TextBlock Text="绝区零"/>
+                        </ComboBox>
+                        <ListView x:Name="SearchResultList" ItemClick="NavigateDetail" IsItemClickEnabled="True" Margin="0,35,0,0">
+                        </ListView>
+                    </Grid>
+                </ScrollViewer>
+            </PivotItem>
+            
+            <PivotItem Header="用户" Margin="0,0,0,0">
+                <ListView x:Name="SearchUserList"  IsItemClickEnabled="True" Margin="0,0,0,0">
+                    <Grid Margin="0,5,0,0">
+                        <Ellipse Height="60" Width="60" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="DetailUserImage" ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock x:Name="DetailUserNickname" Text="深海舌鲆鱼" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="95,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="20" />
+                        <TextBlock x:Name="DetailUserIntroduce" Text="珊瑚宫心海天下第一" Margin="95,40,25,10" FocusVisualPrimaryBrush="Black" Foreground="#FF757575" FontSize="14" TextWrapping="Wrap" />
+                        <Image x:Name="DetailPendantImage" Width="80" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/default_pendant.png" />
+                    </Grid>
+                </ListView>
+            </PivotItem>
+            <PivotItem Header="话题" Margin="0,0,0,0"/>
+            <PivotItem Header="百科" Margin="0,0,0,0"/>
+        </Pivot>
+    </Grid>
+</Page>

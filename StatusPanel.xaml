@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="163*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <ScrollViewer HorizontalScrollMode="Disabled" VerticalAlignment="Bottom" VerticalScrollMode="Enabled">
+        <ScrollViewer HorizontalScrollMode="Disabled" VerticalAlignment="Bottom" VerticalScrollMode="Enabled" Visibility="Collapsed">
             <Grid>
                 <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="16,0,0,16" Width="160" 
                     Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="160">
@@ -105,6 +105,82 @@
             
 
         </ScrollViewer>
-        
+        <ListView FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None" Margin="0,75,0,0" Width="329" HorizontalAlignment="Left">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" 
+                Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="150" Margin="0,10,0,0" Click="Gamestart_Genshin">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/game-logo/ys-logo.jpg" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="原神" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <TextBlock Text="启动游戏 &gt;" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <Ellipse Height="40" Width="40" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/Content/ys-tl.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="160/160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,59,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                </Grid>
+            </Button>
+            <Button Width="300" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0" Margin="0,10,0,0">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/game-logo/sr-logo.jpg" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="崩坏:星穹铁道" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <TextBlock Text="启动游戏 &gt;" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <Ellipse Height="40" Width="40" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/Content/xt-tl.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="180/180" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,59,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                </Grid>
+            </Button>
+            <Button Width="300" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/game-logo/bh3-logo.jpg" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="崩坏3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <TextBlock Text="启动游戏 &gt;" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <Ellipse Height="40" Width="40" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/Content/bh3-tl.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="160/160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,59,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                </Grid>
+            </Button>
+            <Button Width="300" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/game-logo/dby-logo.jpg" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="界面设定" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <TextBlock Text="前往设定 &gt;" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,13,10,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                </Grid>
+            </Button>
+        </ListView>
     </Grid>
 </Page>

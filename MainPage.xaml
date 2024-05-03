@@ -14,11 +14,16 @@
                         x:Name="NaviView"
                         Loaded="NaviView_Loaded"
                         ItemInvoked="NaviView_ItemInvoked"
-                        BackRequested="NaviView_BackRequested">
+                        BackRequested="NaviView_BackRequested" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
-                <NavigationViewItem Tag="KokomiAssistant.StatusPanel" Content="主页" Icon="Home" IsSelected="True"/>
+                <NavigationViewItem Tag="KokomiAssistant.StatusPanel" Content="主页" Icon="Home" IsSelected="True">
+                    <NavigationViewItem.Background>
+                        <RevealBackgroundBrush Color="Transparent" FallbackColor="Transparent"/>
+                    </NavigationViewItem.Background>
+                </NavigationViewItem>
                 <NavigationViewItemSeparator Opacity="1"/>
                 <NavigationViewItemHeader Content="社区"/>
+                <NavigationViewItem Tag="KokomiAssistant.SocialSearchPanel" Content="搜索" Icon="Zoom"/>
                 <NavigationViewItem Tag="KokomiAssistant.SocialPanelGenshin" Content="原神">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="/Assets/Content/Genshin-wish.png"/>
@@ -39,20 +44,26 @@
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelChat" Content="别野聊天室" Icon="Message"/>
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelAssistant" Content="助手工具" Icon="Pin"/>
                 <NavigationViewItem Tag="KokomiAssistant.ToolPanelDev" Content="开发工具" Icon="Repair"/>
-                <NavigationViewItem Tag="KokomiAssistant.PostDetailPanel" Content="帖子详情" />
-                <NavigationViewItem Tag="KokomiAssistant.UserDetailPanel" Content="用户详情" />
-
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelPhoneLink" Content="化海月助手">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/Content/phonelink.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="KokomiAssistant.PostDetailPanel" Content="帖子详情" Icon="Page2"/>
+                <NavigationViewItem Tag="KokomiAssistant.UserDetailPanel" Content="用户详情" Icon="ContactInfo"/>
+                <NavigationViewItem Tag="KokomiAssistant.ToolPanelInsideWebView" Content="浏览器(Edge)" Icon="Globe"/>
+                <NavigationViewItem Tag="KokomiAssistant.SchemeRedirectPanel" Content="跳转页" Icon="Page"/>
 
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
-                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="0,0,0,0" Background="#FFE6E6E6">
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="0,0,0,0" Background="#00000000">
                     <Grid Margin="0,4,0,4" HorizontalAlignment="Left">
                         <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="4,0,0,0">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Assets/Content/default_avatar.png"></ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                    <TextBlock Text="未登入@local" HorizontalAlignment="Left" Margin="48,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="深海舌鲆鱼@local" HorizontalAlignment="Left" Margin="48,0,0,0" VerticalAlignment="Center" />
                 </Grid>
                     <Button.Flyout>
                         <Flyout>
@@ -68,5 +79,13 @@
 
             </Frame>
         </NavigationView>
+        <Grid x:Name="NotifyPane" Height="40" VerticalAlignment="Top" Visibility="Collapsed">
+            <Grid.Background>
+                <AcrylicBrush TintColor="#7FD2CBE3"/>
+            </Grid.Background>
+            <Image Source="/Assets/Content/comment.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"></Image>
+            <TextBlock x:Name="NotifyDetail" Text="有一条新即时通知！" VerticalAlignment="Center" FontSize="16" Margin="40,0,40,0" TextTrimming="CharacterEllipsis"/>
+            <AppBarButton Icon="Cancel" Width="40" HorizontalAlignment="Right" Click="NotifyPanel_ButtonClick"/>
+        </Grid>
     </Grid>
 </Page>

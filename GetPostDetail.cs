@@ -12,9 +12,9 @@ namespace KokomiAssistant
 {
     class PostDetail
     {
-        public async static Task<DetailRoot> GetPostList(int postID)
+        public async static Task<DetailRoot> GetPostDetail(int postID)
         {
-            Uri uri = new Uri("https://api-takumi.miyoushe.com/post/api/getPostFull?post_id=" + postID);
+            Uri uri = new Uri("https://bbs-api.miyoushe.com/post/api/getPostFull?post_id=" + postID);
             HttpClient client = new HttpClient();
             var headers = client.DefaultRequestHeaders;
             headers.Referrer = new Uri("https://app.mihoyo.com");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,11 +27,27 @@ namespace KokomiAssistant
         public ToolPanelChat()
         {
             this.InitializeComponent();
+            if(true)
+            {
+                VillaPcVersion.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                VillaPcVersion.Visibility = Visibility.Visible;
+                //useBrowserAsync();
+            }
         }
+
+        public async Task useBrowserAsync()
+        {
+            await InsideWebView.EnsureCoreWebView2Async();
+            InsideWebView.CoreWebView2.Navigate("https://dby.miyoushe.com/");
+        }
+
 
         private void ChannelPaneControl(object sender, TappedRoutedEventArgs e)
         {
-            if (ChannelPaneControlButton.Tag == "expand")
+            if ((string)ChannelPaneControlButton.Tag == "expand")
             {
                 ChannelPaneControlButton.Tag = "collpsed";
                 ChannelPaneControlButtonImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Content/Collpsed.png"));
@@ -50,7 +67,7 @@ namespace KokomiAssistant
 
         private void VillaPaneControl(object sender, TappedRoutedEventArgs e)
         {
-            if (VillaPaneControlButton.Tag == "collpsed")
+            if ((string)VillaPaneControlButton.Tag == "collpsed")
             {
                 
                 VillaPaneControlButton.Tag = "expand";

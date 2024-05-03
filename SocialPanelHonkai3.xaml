@@ -9,8 +9,270 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="pageTitle" Text="崩坏3社区"
-                   Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Pivot x:Name="Honkai3Pivot">
+            <Pivot.RightHeader>
+                <CommandBar>
+                    <AppBarButton Label="签到">
+                        <AppBarButton.Icon>
+                            <BitmapIcon UriSource="/Assets/Content/check_in.png"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton Icon="Zoom" Label="搜索" AllowFocusOnInteraction="True" Click="GotoSearchPanel">
+                    </AppBarButton>
+                    <AppBarButton Icon="Filter" Label="筛选"/>
+                    <AppBarButton Icon="Add" Label="发布"/>
+                    <AppBarButton Icon="Refresh" Label="刷新" Click="AppbarButton_Refresh_Click"/>
+                </CommandBar>
+            </Pivot.RightHeader>
+            <PivotItem Header="发现">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3DiscoverList" Loading="Honkai3DiscoverList_Loading" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,40" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="官方" Background="{x:Null}">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3OfficalList" Height="Auto" Width="Auto" Loaded="Honkai3OfficalList_Loaded" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,50" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="甲板" ToolTipService.ToolTip="听说及时洒水才能保持甲板清洁噢!！">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3DockList" Height="Auto" Width="Auto" Loaded="Honkai3DockList_Loaded" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,50" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="攻略">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3WalkthroughList" Height="Auto" Width="Auto" Loaded="Honkai3WalkthroughList_Loaded" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,50" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="同人图">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3FanPicList" Height="Auto" Width="Auto" Loaded="Honkai3FanPicList_Loaded" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,50" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="同人文">
+                <Grid>
+                    <ScrollViewer>
+                        <ListView x:Name="Honkai3FanDocList" Height="Auto" Width="Auto" Loaded="Honkai3FanDocList_Loaded" ItemClick="NavigateDetail" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Tag="{Binding Tag}" Margin="0,10,10,0" Padding="0,0,0,0"  BorderThickness="0,0,0,0" UseLayoutRounding="False">
+                                        <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserPic}" Stretch="UniformToFill"></ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding User}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" />
+                                        <TextBlock Text="{Binding PostTitle}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,50,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" FontWeight="Bold" />
+                                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding PostSummary}" VerticalAlignment="Stretch" Margin="10,84,9,40" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="18" HorizontalAlignment="Stretch" />
+                                        <Image HorizontalAlignment="Left" Margin="20,120,20,50" Source="{Binding PostPic}" MaxHeight="120"/>
+                                        <GridView HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="40" Padding="0,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsSwipeEnabled="False" IsHitTestVisible="False" IsEnabled="False" IsTapEnabled="True" IsTextScaleFactorEnabled="False" IsZoomedInView="False" UseSystemFocusVisuals="True">
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/view.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding ViewNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/like.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" Stretch="Fill" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding LikeNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/comment.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,0,0,0" Text="{Binding CommentNum}"></TextBlock>
+                                            </Grid>
+                                            <Grid MinWidth="100">
+                                                <Image Source="/Assets/Content/time.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="20" Width="20" />
+                                                <TextBlock VerticalAlignment="Center" Margin="25,0,0,0" Text="{Binding PubTime}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
+                                            </Grid>
+                                        </GridView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+
+        </Pivot>
+        <ProgressBar x:Name="ProgressStatus" Height="5" VerticalAlignment="Top" Background="Transparent"/>
 
     </Grid>
 </Page>
