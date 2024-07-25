@@ -15,7 +15,11 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:Name="picview">
                             <Grid Padding="10,10,10,10">
-                                <TextBlock Text="{Binding Describe}" TextWrapping="Wrap" FontSize="14"></TextBlock>
+                                <RichTextBlock TextWrapping="Wrap">
+                                    <Paragraph FontSize="14">
+                                        <Run Text="{Binding Describe}"/>
+                                    </Paragraph>
+                                </RichTextBlock>
                                 <Image Tag="{Binding ImageSource}" Source="{Binding ImageSource}" Stretch="UniformToFill" Tapped="MultiPicViewPic_Tapped"/>
                             </Grid>
                         </DataTemplate>

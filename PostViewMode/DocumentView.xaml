@@ -11,12 +11,12 @@
     <Grid>
         <ScrollViewer>
             <ListView x:Name="DocumentViewList" Height="Auto" Width="Auto" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None">
-
+                
             </ListView>
         </ScrollViewer>
-        <ScrollViewer Visibility="Collapsed">
-            <RichTextBlock >
-                
+        <ScrollViewer>
+            <RichTextBlock x:Name="DocumentViewBlock" Margin="10,0,10,0">
+
             </RichTextBlock>
         </ScrollViewer>
     </Grid>

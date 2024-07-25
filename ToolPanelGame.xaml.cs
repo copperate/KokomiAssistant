@@ -27,6 +27,8 @@ namespace KokomiAssistant
     /// </summary>
     public sealed partial class ToolPanelGame : Page
     {
+        Frame rootFrame = Window.Current.Content as Frame;
+
         public ToolPanelGame()
         {
             this.InitializeComponent();
@@ -124,13 +126,13 @@ namespace KokomiAssistant
             bool nflag = true;
             if (schemehost == "mihoyobbs")
             {
-                if (local.Host == "article") { Frame.Navigate(typeof(PostDetailPanel), local.AbsolutePath.Substring(1)); nflag = false; }
-                if (local.Host == "user") { Frame.Navigate(typeof(UserDetailPanel), local.AbsolutePath.Substring(1)); nflag = false; }
-                if (nflag) { Frame.Navigate(typeof(SchemeRedirectPanel), local); }
+                if (local.Host == "article") { rootFrame.Navigate(typeof(PostDetailPanel), local.AbsolutePath.Substring(1)); nflag = false; }
+                if (local.Host == "user") { rootFrame.Navigate(typeof(UserDetailPanel), local.AbsolutePath.Substring(1)); nflag = false; }
+                if (nflag) { rootFrame.Navigate(typeof(SchemeRedirectPanel), local); }
             }
             else
             {
-                Frame.Navigate(typeof(ToolPanelInsideWebView), local);
+                rootFrame.Navigate(typeof(ToolPanelInsideWebView), local);
             }
         }
     }

@@ -50,9 +50,16 @@ namespace KokomiAssistant
                 ContentFrameView.Navigate(typeof(ToolPanelInsideWebView), uri);
             }
             if (eventargs.Host == "openurl") {
-                string text = eventargs.Query.Substring(5);
+                string text = eventargs.Query.Substring(eventargs.Query.IndexOf("url=") + 4);
                 string uri = System.Web.HttpUtility.UrlDecode(text, System.Text.Encoding.UTF8);
-                ContentFrameView.Navigate(typeof(ToolPanelInsideWebView), uri);
+                //原神版区的冒险互助专区转为帖子
+                if (uri.Contains("qaa.miyoushe.com/ys_help") && uri.Contains("articleDetail"))
+                {
+                    string postid = uri.Substring(uri.IndexOf("articleDetail/") + 14);
+                    ContentFrameView.Navigate(typeof(PostDetailPanel), postid);
+                }
+                //其它网页仍正常通过浏览器访问
+                else ContentFrameView.Navigate(typeof(ToolPanelInsideWebView), uri);
             }
 
 

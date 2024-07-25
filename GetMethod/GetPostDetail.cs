@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace KokomiAssistant
 {
@@ -17,8 +18,31 @@ namespace KokomiAssistant
             Uri uri = new Uri("https://bbs-api.miyoushe.com/post/api/getPostFull?post_id=" + postID);
             HttpClient client = new HttpClient();
             var headers = client.DefaultRequestHeaders;
-            headers.Referrer = new Uri("https://app.mihoyo.com");
-            var responce = await client.GetAsync(uri);          //TODO:增加离线逻辑
+            headers.Referrer = new Uri("https://app.mihoyo.com"); 
+            var message = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            List<string> cookies = new List<string>();
+            string CookieString = localSettings.Values["LoginCookies"].ToString();
+            while (CookieString != "")
+            {
+                string oneLineCookie;
+                if (CookieString.IndexOf("\r") >= 0) oneLineCookie = CookieString.Substring(0, CookieString.IndexOf("\r"));
+                else
+                {
+                    oneLineCookie = CookieString;
+                    CookieString = "";
+                }
+                cookies.Add(oneLineCookie);
+                int i = CookieString.IndexOf("\r") + 1;
+                if (i <= CookieString.Length) CookieString = CookieString.Substring(i);
+            }
+
+            for (int i = 0; i < cookies.Count(); i++)
+            {
+                message.Headers.Add("Cookie", cookies[i]);
+            }
+            var responce = await client.SendAsync(message);          //TODO:增加离线逻辑
             var result = await responce.Content.ReadAsStringAsync();
             var serializer = new DataContractJsonSerializer(typeof(DetailRoot));
 

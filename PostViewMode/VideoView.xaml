@@ -10,7 +10,7 @@
 
     <Grid Background="Black">
         <MediaElement x:Name="VideoViewPlayer2" AreTransportControlsEnabled="True" AutoPlay="False" />
-        <Grid x:Name="VideoViewVideoDetail" Width="40" HorizontalAlignment="Right" Background="#7F8E8E8E" FocusVisualPrimaryBrush="Black" VerticalAlignment="Top" Height="40">
+        <Grid x:Name="VideoViewVideoDetail" Width="40" HorizontalAlignment="Right" Background="#7F8E8E8E" FocusVisualPrimaryBrush="Black" VerticalAlignment="Top" Height="40" BorderBrush="White" CornerRadius="8,0,0,8" BorderThickness="0.5,0.5,0,0.5">
             <AppBarButton x:Name="VideoDetailPanelControl" Foreground="White" Icon="MusicInfo" Width="40" Height="40" HorizontalAlignment="Right" Click="VideoDetail_Click" Tag="0" ToolTipService.ToolTip="查看视频详情" FocusVisualPrimaryBrush="#FFBFBFBF" />
             <TextBlock Text="视频详情" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="22" Margin="0,10,302,0"></TextBlock>
             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="切换画质" Foreground="White" Margin="0,44,334,0"></TextBlock>
@@ -22,7 +22,11 @@
             </ComboBox>
             <TextBlock x:Name="ViewNum" HorizontalAlignment="Right" VerticalAlignment="Top" Text="浏览量" Foreground="White" Margin="0,105,218,0" Width="170"></TextBlock>
             <ScrollViewer Margin="0,129,40,0" HorizontalAlignment="Right" Width="350">
-                <TextBlock x:Name="ViewDescribe" Text="视频简介" Foreground="White" TextWrapping="Wrap"/>
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        <Run x:Name="ViewDescribe" Text="视频简介" Foreground="White"/>
+                    </Paragraph>
+                </RichTextBlock>
             </ScrollViewer>
 
         </Grid>

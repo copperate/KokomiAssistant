@@ -56,9 +56,11 @@ namespace KokomiAssistant
         {
             if (e.Parameter is string && !string.IsNullOrWhiteSpace((string)e.Parameter))
             {
-                ProgressStatus.Value = 0;
+                ProgressStatus.IsIndeterminate = true;
                 int postid = int.Parse((string)e.Parameter);
                 LoadTask(postid);
+                ProgressStatus.IsIndeterminate = false;
+                ProgressStatus.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -72,7 +74,6 @@ namespace KokomiAssistant
         }
         public async Task<string> GetPostDetails(int i)
         {
-            ProgressStatus.Value = 10;
 
             DetailRoot Data = await PostDetail.GetPostDetail(i);
             if (Data.retcode != 0)
@@ -100,8 +101,6 @@ namespace KokomiAssistant
                 //throw;
             }
 
-            ProgressStatus.Value = 20;
-
             switch (gamearea)
             {
                 case 1: Gameid = "崩坏3"; break;
@@ -118,7 +117,7 @@ namespace KokomiAssistant
             DetailUserLevel.Text = Gameid+" Lv."+Data.data.post.user.level_exp.level.ToString();
             DetailUserIntroduce.Text = Data.data.post.user.introduce;
             if (Data.data.post.forum == null) AreaText.Text = Gameid + "(无版区)";
-            else AreaText.Text = Gameid + "-" + Data.data.post.forum.name;
+            else AreaText.Text = Gameid + " - " + Data.data.post.forum.name;
            
             AreaText.Tag = gamearea;
             ViewNumText.Text="浏览量："+Data.data.post.stat.view_num.ToString();
@@ -128,8 +127,6 @@ namespace KokomiAssistant
             DetailPanelShareContentButton.Label ="转发("+Data.data.post.stat.forward_num.ToString()+")";  
             CommentPivotItem.Header="评论("+Data.data.post.stat.reply_num.ToString()+")"; 
             UserDetailPane0.Tag=Data.data.post.user.uid.ToString();
-
-            ProgressStatus.Value = 40;
 
             PostContent.Visibility = Visibility.Collapsed;
             PostContentView.Visibility = Visibility.Collapsed;
@@ -150,7 +147,7 @@ namespace KokomiAssistant
                     {
                         PostTitle.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
                         DetailPanelBG.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-                        PostContentView.Navigate(typeof(PostViewMode.VideoView), Data.data.post.post.structured_content); PostContentView.Visibility = Visibility.Visible;
+                        PostContentView.Navigate(typeof(VideoView), Data.data.post.post.structured_content); PostContentView.Visibility = Visibility.Visible;
                     }
                     break;
                 default: PostContent.NavigateToString(DetailData); break;
@@ -178,8 +175,7 @@ namespace KokomiAssistant
 
             getComments(i, 2, false, "");
 
-            ProgressStatus.Value = 100;
-            ProgressStatus.Visibility = Visibility.Collapsed;
+            
             return "";
         }
 
@@ -201,7 +197,7 @@ namespace KokomiAssistant
             {
                 DetailPanelControlButton.Icon = new SymbolIcon(Symbol.Forward);
                 DetailPanelControlButton.Label = "收起侧栏";
-                DetailPanelSplit.OpenPaneLength = 350;
+                DetailPanelSplit.OpenPaneLength = 400;
 
             }
         }
@@ -222,7 +218,7 @@ namespace KokomiAssistant
                 listView.IsItemClickEnabled = false; listView.IsRightTapEnabled = false; listView.IsHitTestVisible = false; listView.IsMultiSelectCheckBoxEnabled = false;
 
                 Grid statusGrid= new Grid();
-                statusGrid.VerticalAlignment = VerticalAlignment.Top;statusGrid.Width = 305;
+                statusGrid.VerticalAlignment = VerticalAlignment.Top;statusGrid.Width = 355;
 
                 Ellipse avatarellipse = new Ellipse();
                 avatarellipse.Height = 40; avatarellipse.Width = 40;
@@ -330,7 +326,8 @@ namespace KokomiAssistant
                             Button button = new Button();
                             Grid grid4 = new Grid();
                             button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(178, 199, 217, 255));
-                            button.Width = double.NaN; button.Height = 50; button.MinWidth = 300; button.Padding = new Thickness(0, 0, 0, 0);
+                            //button.Width = double.NaN; button.Height = 50; button.MinWidth = 300; 
+                            button.Padding = new Thickness(0, 0, 0, 0); button.CornerRadius = new CornerRadius(5, 5, 5, 5);
                             button.HorizontalContentAlignment = HorizontalAlignment.Left; button.VerticalContentAlignment = VerticalAlignment.Top;
 
                             Windows.UI.Xaml.Shapes.Ellipse ellipse = new Ellipse();
@@ -339,14 +336,14 @@ namespace KokomiAssistant
                             image1.ImageSource = new BitmapImage(new Uri(Data.data.user_info.avatar_url));
                             image1.Stretch = Stretch.UniformToFill;
 
-                            ellipse.Width = 30; ellipse.Height = 30; ellipse.Fill = image1;
-                            ellipse.Margin = new Thickness(10, 10, 0, 0); ellipse.VerticalAlignment = VerticalAlignment.Top; ellipse.HorizontalAlignment = HorizontalAlignment.Left;
+                            ellipse.Width = 20; ellipse.Height = 20; ellipse.Fill = image1;
+                            ellipse.Margin = new Thickness(0, 0, 0, 0); ellipse.VerticalAlignment = VerticalAlignment.Top; ellipse.HorizontalAlignment = HorizontalAlignment.Left;
 
                             TextBlock block1 = new TextBlock();
-                            block1.Text = "用户: " + insertObject.mention.nickname;
+                            block1.Text = insertObject.mention.nickname;
                             block1.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Left;
-                            block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0)); block1.FontSize = 18;
-                            block1.Margin = new Thickness(45, 13, 10, 0);
+                            block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0)); block1.FontSize = 14;
+                            block1.Margin = new Thickness(25, 0, 5, 0);
 
                             grid4.Children.Add(ellipse);
                             grid4.Children.Add(block1);
@@ -490,6 +487,7 @@ namespace KokomiAssistant
                     if (i + 1 == Contentlist.Count)
                     {
                         textBlock.TextWrapping = TextWrapping.Wrap;
+                        textBlock.MaxHeight = 290;
                         listView.Items.Add(textBlock);
                     }
                 }
@@ -547,7 +545,12 @@ namespace KokomiAssistant
             PanelPicView.Source = imagea.Tag as BitmapImage;
             PanelPicViewGrid.Visibility = Visibility.Visible;
         }
-
+        private void MentionButtonNavigateUser(object sender, TappedRoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            String userID = button.Tag.ToString();
+            Frame.Navigate(typeof(UserDetailPanel), userID);
+        }
         private void DetailPanelSharePostButton(object sender, RoutedEventArgs e)
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -600,22 +603,36 @@ namespace KokomiAssistant
             PanelPicViewGrid.Visibility = Visibility.Collapsed;
         }
 
+        private void NotifyPanel_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async void NotifyPane_Activated(string message)
+        {
+            NotifyPane.Visibility = Visibility.Visible;
+            NotifyDetail.Text = message;
+            var result = await PaneClose();
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async Task<string> PaneClose()
+        {
+            return await Task.Run(() => {
+                Thread.Sleep(5000); return "";
+            });
+        }
+
         private void PanelPicViewGrid_DownloadButton_Clicked(object sender, RoutedEventArgs e)
         {
-            int outvision = 0;
-            try { ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("尝试下载中……"); outvision = 0; } catch { ((Window.Current.Content as Frame).Content as SchemeRedirectPanel).NotifyPane_Activated("尝试下载中……"); outvision = 1; }
-            
+            NotifyPane_Activated("尝试下载中……");
             try
             {
                 SavePicToDownload();
-                if (outvision == 1) { ((Window.Current.Content as Frame).Content as SchemeRedirectPanel).NotifyPane_Activated("下载成功，已保存到/Download文件夹。"); }
-                else { ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("下载成功，已保存到/Download文件夹。"); }
+                NotifyPane_Activated("下载成功，已保存到/Download文件夹。");
                 
             }
             catch
             {
-                if (outvision == 0) { ((Window.Current.Content as Frame).Content as SchemeRedirectPanel).NotifyPane_Activated("下载失败，请重试。"); }
-                else ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("下载失败，请重试。");
+                NotifyPane_Activated("下载失败，请重试。");
             }
 
         }
@@ -680,7 +697,7 @@ namespace KokomiAssistant
                 listView.VerticalAlignment = VerticalAlignment.Top; listView.IsDoubleTapEnabled = false; listView.IsTapEnabled = false;
                 //listView.IsItemClickEnabled = false; 
                 listView.IsRightTapEnabled = false; listView.IsMultiSelectCheckBoxEnabled = false;listView.SelectionMode = ListViewSelectionMode.None;
-
+                //用户头像、名称、发布时间、楼层数
                 Grid statusGrid = new Grid();
                 statusGrid.VerticalAlignment = VerticalAlignment.Top; statusGrid.Width = 305;
 
@@ -710,8 +727,253 @@ namespace KokomiAssistant
 
 
                 listView.Items.Add(statusGrid);
-                
+                //评论主体
                 string str = rootReplyData.data.reply.reply.struct_content.ToString();
+                JArray json = JArray.Parse(str);
+                List<DocumentViewContent> Contentlist = json.ToObject<List<DocumentViewContent>>();
+                InsertObject insertObject;
+                bool isInsert;
+                Run run = new Run();
+
+                RichTextBlock MainCommentDetailTextBlock = new RichTextBlock();
+                Paragraph paragraph = new Paragraph();
+                List<InlineUIContainer> CommentFloorInlineUIContainers = new List<InlineUIContainer>();
+                for (int i = 0; i < Contentlist.Count; i++)
+                {
+                    try
+                    {
+                        insertObject = JObject.Parse(Contentlist[i].insert.ToString()).ToObject<InsertObject>();
+                        isInsert = true;
+                    }
+                    catch (Exception)
+                    {
+                        insertObject = null;
+                        isInsert = false;
+                    }
+                    if (isInsert)
+                    {
+                        if (insertObject.image != null)
+                        {
+                            Windows.UI.Xaml.Controls.Image image = new Windows.UI.Xaml.Controls.Image();
+                            BitmapImage bitmapImage2 = new BitmapImage(new Uri(insertObject.image));
+                            image.Source = bitmapImage2;
+                            image.Stretch = Stretch.UniformToFill;
+                            image.Tag = bitmapImage2;
+                            image.Tapped += new TappedEventHandler(DetailPageImageView);
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count-1].Child = image;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                        if (insertObject.villa_card != null)
+                        {
+                            Button button = new Button();
+                            Grid grid3 = new Grid();
+                            button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(178, 0, 108, 190));
+                            button.Width = 310; button.Height = 100; button.Padding = new Thickness(0, 0, 0, 0);
+                            Windows.UI.Xaml.Controls.Image image = new Windows.UI.Xaml.Controls.Image();
+                            TextBlock block1 = new TextBlock();
+                            TextBlock block2 = new TextBlock();
+                            image.Source = new BitmapImage(new Uri(insertObject.villa_card.villa_cover));
+                            image.Stretch = Stretch.UniformToFill;
+                            image.Opacity = 0.5;
+                            block1.Text = "别野"; block1.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Left;
+                            block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255)); block1.FontSize = 18;
+                            block2.Text = insertObject.villa_card.villa_name + "(" + insertObject.villa_card.villa_member_num + ")";
+                            block2.VerticalAlignment = VerticalAlignment.Bottom; block2.HorizontalAlignment = HorizontalAlignment.Left;
+                            block2.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255)); block2.FontSize = 18;
+                            grid3.Children.Add(image);
+                            grid3.Children.Add(block2);
+                            grid3.Children.Add(block1);
+                            button.Content = grid3;
+                            button.Tag = insertObject.villa_card.villa_id;
+
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = button;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                        if (insertObject.mention != null)
+                        {
+                            Button button = new Button();
+                            Grid grid4 = new Grid();
+                            button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(178, 199, 217, 255));
+                            //button.Width = double.NaN; button.Height = 50; button.MinWidth = 300; 
+                            button.Padding = new Thickness(0, 0, 0, 0); button.CornerRadius = new CornerRadius(5, 5, 5, 5);
+                            button.HorizontalContentAlignment = HorizontalAlignment.Left; button.VerticalContentAlignment = VerticalAlignment.Top;
+
+                            Windows.UI.Xaml.Shapes.Ellipse ellipse = new Ellipse();
+                            ImageBrush image1 = new ImageBrush();
+                            UserDetailRoot Data = await GetUserDetail.GetUserDetailInfo(insertObject.mention.uid);
+                            image1.ImageSource = new BitmapImage(new Uri(Data.data.user_info.avatar_url));
+                            image1.Stretch = Stretch.UniformToFill;
+
+                            ellipse.Width = 20; ellipse.Height = 20; ellipse.Fill = image1;
+                            ellipse.Margin = new Thickness(0, 0, 0, 0); ellipse.VerticalAlignment = VerticalAlignment.Top; ellipse.HorizontalAlignment = HorizontalAlignment.Left;
+
+                            TextBlock block1 = new TextBlock();
+                            block1.Text = insertObject.mention.nickname;
+                            block1.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Left;
+                            block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0)); block1.FontSize = 14;
+                            block1.Margin = new Thickness(25, 0, 5, 0);
+
+                            grid4.Children.Add(ellipse);
+                            grid4.Children.Add(block1);
+                            button.Content = grid4;
+                            button.Tag = insertObject.mention.uid;
+                            button.Tapped += new TappedEventHandler(MentionButtonNavigateUser);
+
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = button;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                        if (insertObject.link_card != null)
+                        {
+                            Button button = new Button();
+                            Grid grid5 = new Grid();
+                            button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(178, 255, 232, 199));
+                            button.Width = double.NaN; button.Height = 90; ; button.Padding = new Thickness(0, 0, 0, 0);
+                            button.HorizontalContentAlignment = HorizontalAlignment.Left; button.VerticalContentAlignment = VerticalAlignment.Top;
+                            Windows.UI.Xaml.Shapes.Ellipse ellipse = new Ellipse();
+                            ImageBrush image1 = new ImageBrush();
+                            image1.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/Content/type_link.png"));
+                            image1.Stretch = Stretch.UniformToFill; image1.Opacity = 0.6;
+                            ellipse.Width = 30; ellipse.Height = 30; ellipse.Fill = image1; ellipse.VerticalAlignment = VerticalAlignment.Top; ellipse.HorizontalAlignment = HorizontalAlignment.Left; ellipse.Margin = new Thickness(10, 10, 0, 0);
+
+                            TextBlock block1 = new TextBlock();
+                            TextBlock block2 = new TextBlock();
+                            block1.Text = "[链接卡片]" + insertObject.link_card.title;
+                            block1.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Stretch;
+                            block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0)); block1.FontSize = 18;
+                            block1.Margin = new Thickness(45, 13, 10, 0);
+                            block2.Text = insertObject.link_card.origin_url;
+                            block2.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Stretch;
+                            block2.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 117, 117, 117)); block1.FontSize = 18;
+                            block2.Margin = new Thickness(10, 50, 10, 0);
+
+                            grid5.Children.Add(ellipse);
+                            grid5.Children.Add(block1);
+                            grid5.Children.Add(block2);
+                            button.Content = grid5;
+                            button.Tag = insertObject.link_card.landing_url;
+
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = button;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                        if (insertObject.villa_forward_card != null)
+                        {
+                            TextBlock textBlock1 = new TextBlock();
+                            TextBlock textBlock2 = new TextBlock();
+                            textBlock1.Text = "从 " + insertObject.villa_forward_card.room_name + "转发的聊天记录 [小心海助手暂不支持]";
+                            textBlock1.Margin = new Thickness(50, 10, 10, 0);
+                            textBlock1.FontSize = 16; textBlock1.VerticalAlignment = VerticalAlignment.Top;
+                            textBlock2.Text = "来自别野 " + insertObject.villa_forward_card.villa_name;
+                            textBlock2.Margin = new Thickness(50, 35, 10, 10);
+                            textBlock2.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 127, 127, 127));
+                            textBlock2.VerticalAlignment = VerticalAlignment.Top; textBlock2.HorizontalAlignment = HorizontalAlignment.Left;
+                            Windows.UI.Xaml.Controls.Image image = new Windows.UI.Xaml.Controls.Image();
+                            image.Source = new BitmapImage(new Uri(insertObject.villa_forward_card.villa_avatar_url));
+                            image.Width = 40; image.Height = 40; image.HorizontalAlignment = HorizontalAlignment.Left;
+                            image.VerticalAlignment = VerticalAlignment.Center;
+
+                            Grid grid6 = new Grid();
+                            grid6.Children.Add(textBlock1);
+                            grid6.Children.Add(textBlock2);
+                            grid6.Children.Add(image);
+                            Button button = new Button();
+                            button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(52, 255, 108, 196));
+                            button.HorizontalAlignment = HorizontalAlignment.Left; button.VerticalAlignment = VerticalAlignment.Top;
+                            button.HorizontalContentAlignment = HorizontalAlignment.Left; button.VerticalContentAlignment = VerticalAlignment.Top;
+                            button.Content = grid6;
+                            button.Tag = insertObject.villa_forward_card;
+
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = button;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                        if (insertObject.villa_avatar_action != null)
+                        {
+                            Grid grid6 = new Grid();
+
+                            Windows.UI.Xaml.Controls.Image image = new Windows.UI.Xaml.Controls.Image();
+                            BitmapImage bitmapImage2 = new BitmapImage(new Uri(insertObject.villa_avatar_action.url));
+                            image.Source = bitmapImage2;
+                            image.Width = 200; image.Height = 200;
+                            image.Stretch = Stretch.UniformToFill;
+                            grid6.Children.Add(image);
+
+                            TextBlock actionText = new TextBlock();
+                            actionText.HorizontalAlignment = HorizontalAlignment.Left; actionText.VerticalAlignment = VerticalAlignment.Top;
+                            actionText.Margin = new Thickness(10, 210, 0, 0);
+                            actionText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 113, 113, 113));
+                            actionText.Text = "发起了 " + insertObject.villa_avatar_action.action_name;
+                            grid6.Children.Add(actionText);
+
+                            CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                            CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = grid6;
+                            paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                        }
+                    }
+                    else
+                    {
+                        run.Text = Contentlist[i].insert.ToString();
+                        run.FontSize = 16;
+                        if (Contentlist[i].attributes != null)
+                        {
+                            if (Contentlist[i].attributes.bold != null) { run.FontWeight = Windows.UI.Text.FontWeights.SemiBold; }
+                            if (Contentlist[i].attributes.italic != null) { run.FontStyle = Windows.UI.Text.FontStyle.Italic; }
+                            if (!string.IsNullOrEmpty(Contentlist[i].attributes.color) && Contentlist[i].attributes.color.Substring(0, 1) == "#")
+                            {
+                                string colorcodeR = Contentlist[i].attributes.color.Substring(1, 2);
+                                string colorcodeG = Contentlist[i].attributes.color.Substring(3, 2);
+                                string colorcodeB = Contentlist[i].attributes.color.Substring(5, 2);
+                                run.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, (byte)System.Convert.ToInt32("0x" + colorcodeR, 16), (byte)System.Convert.ToInt32("0x" + colorcodeG, 16), (byte)System.Convert.ToInt32("0x" + colorcodeB, 16)));
+                            }
+                            if (!string.IsNullOrEmpty(Contentlist[i].attributes.link))
+                            {
+                                Button button = new Button();
+                                Grid grid7 = new Grid();
+                                button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(178, 255, 232, 199));
+                                button.Width = double.NaN; button.Height = 90; ; button.Padding = new Thickness(0, 0, 0, 0);
+                                button.HorizontalContentAlignment = HorizontalAlignment.Left; button.VerticalContentAlignment = VerticalAlignment.Top;
+                                Windows.UI.Xaml.Shapes.Ellipse ellipse = new Ellipse();
+                                ImageBrush image1 = new ImageBrush();
+                                image1.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/Content/type_link.png"));
+                                image1.Stretch = Stretch.UniformToFill; image1.Opacity = 0.6;
+                                ellipse.Width = 30; ellipse.Height = 30; ellipse.Fill = image1; ellipse.VerticalAlignment = VerticalAlignment.Top; ellipse.HorizontalAlignment = HorizontalAlignment.Left; ellipse.Margin = new Thickness(10, 10, 0, 0);
+
+                                TextBlock block1 = new TextBlock();
+                                TextBlock block2 = new TextBlock();
+                                block1.Text = "[链接]" + Contentlist[i].insert.ToString();
+                                block1.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Stretch;
+                                block1.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0)); block1.FontSize = 18;
+                                block1.Margin = new Thickness(45, 13, 10, 0);
+                                block2.Text = Contentlist[i].attributes.link;
+                                block2.VerticalAlignment = VerticalAlignment.Top; block1.HorizontalAlignment = HorizontalAlignment.Stretch;
+                                block2.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 117, 117, 117)); block1.FontSize = 18;
+                                block2.Margin = new Thickness(10, 50, 10, 0);
+
+                                grid7.Children.Add(ellipse);
+                                grid7.Children.Add(block1);
+                                grid7.Children.Add(block2);
+                                button.Content = grid7;
+                                button.Tag = Contentlist[i].attributes.link;
+
+                                CommentFloorInlineUIContainers.Add(new InlineUIContainer());
+                                CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1].Child = button;
+                                paragraph.Inlines.Add(CommentFloorInlineUIContainers[CommentFloorInlineUIContainers.Count - 1]);
+                            }
+                        }
+                        paragraph.Inlines.Add(run);
+                        run = new Run();
+                    }
+                    if (i + 1 == Contentlist.Count)
+                    {
+                        MainCommentDetailTextBlock.Blocks.Add(paragraph);
+                        listView.Items.Add(MainCommentDetailTextBlock);
+                    }
+                }
+                /* 原显示评论主体代码
+                  string str = rootReplyData.data.reply.reply.struct_content.ToString();
                 JArray json = JArray.Parse(str);
                 List<DocumentViewContent> Contentlist = json.ToObject<List<DocumentViewContent>>();
                 InsertObject insertObject;
@@ -937,8 +1199,8 @@ namespace KokomiAssistant
                         textBlock.TextWrapping = TextWrapping.Wrap;
                         listView.Items.Add(textBlock);
                     }
-                }
-
+                }*/
+                //点赞与评论状态
                 GridView poststatusGV = new GridView();
                 poststatusGV.HorizontalAlignment = HorizontalAlignment.Stretch; poststatusGV.VerticalAlignment = VerticalAlignment.Bottom;
                 poststatusGV.Height = 40; poststatusGV.Margin = new Thickness(10, 0, 0, 0); poststatusGV.Padding = new Thickness(0, 0, 0, 0);
@@ -1018,9 +1280,9 @@ namespace KokomiAssistant
                     }
 
                     listView.Items.Add(statusGrid);
-                    if (SubRepliesList.data.list[index].r_user!=null)
+                    if (SubRepliesList.data.list[index].r_user != null)
                     {
-                        TextBlock replystatusBlock = new TextBlock();   
+                        TextBlock replystatusBlock = new TextBlock();
                         Run run1 = new Run();
                         run1.Text = "回复 ";
                         replystatusBlock.Inlines.Add(run1);
@@ -1031,6 +1293,7 @@ namespace KokomiAssistant
                         listView.Items.Add(replystatusBlock);
                     }
                     string str = SubRepliesList.data.list[index].reply.struct_content.ToString();
+                    if (str == "") str = "[{\"insert\":\"" + SubRepliesList.data.list[index].reply.content.ToString() + "\"}]";
                     JArray json = JArray.Parse(str);
                     List<DocumentViewContent> Contentlist = json.ToObject<List<DocumentViewContent>>();
                     InsertObject insertObject;

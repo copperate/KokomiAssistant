@@ -46,6 +46,7 @@ namespace KokomiAssistant
         public string post_owner_uid { get; set; }
         public string pin_reply_id { get; set; }
         public int fold_reply_num { get; set; }
+        public string next_offset {  get; set; }
     }
 
     public class Image
@@ -74,8 +75,42 @@ namespace KokomiAssistant
         public bool is_lz { get; set; }
         public int sub_reply_count { get; set; }
         public RUser r_user { get; set; }
-        public object r_reply { get; set; }
-        public object r_post { get; set; }
+        public RReply r_reply { get; set; }
+        public RPost r_post { get; set; }
+    }
+    public class RPost
+    {
+        public string subject {  get; set; }
+        public string post_id { get; set; }
+        public int view_type { get; set; }
+        public int selected_comment {  get; set; }
+        public bool is_mentor { get; set; }
+    }
+    public class RReply
+    {
+        public int game_id { get; set; }
+        public string post_id { get; set; }
+        public string reply_id { get; set; }
+        public string uid { get; set; }
+        public string r_uid { get; set; }
+        public string content { get; set; }
+        public int f_forum_id { get; set; }
+        public string f_reply_id { get; set; }
+        public int floor_id { get; set; }
+        public int is_deleted { get; set; }
+        public int delete_src { get; set; }
+        public int created_at { get; set; }
+        public int updated_at { get; set; }
+        public long deleted_at { get; set; }
+        public string struct_content { get; set; }
+        public List<object> structured_content_rows { get; set; }
+        public bool is_top { get; set; }
+        public bool has_block_word { get; set; }
+        public int overt_status { get; set; }
+        public bool is_showing_missing { get; set; }
+        public int selected_comment_time { get; set; }
+        public bool is_mentor { get; set; }
+        public int view_status { get; set; }
     }
 
     public class MasterStatus

@@ -10,7 +10,7 @@
 
     <Grid>
         <SplitView x:Name="DetailPanelSplit" IsPaneOpen="True"
-           OpenPaneLength="350" PanePlacement="Right" DisplayMode="Inline" PaneBackground="#FFFAFAFA">
+           OpenPaneLength="400" PanePlacement="Right" DisplayMode="Inline" PaneBackground="#FFFAFAFA">
             <Grid x:Name="DetailPanelBG">
                 <TextBlock x:Name="PostTitle" Text="帖子标题"
                    Margin="16,16,16,0" VerticalAlignment="Top" Foreground="Black" FontSize="24" FocusVisualPrimaryBrush="#FF100101" TextTrimming="CharacterEllipsis" MaxLines="1"/>
@@ -48,7 +48,7 @@
                                 <Grid>
                                     <ProgressBar x:Name="CommentLoadProgressBar" VerticalAlignment="Top" Height="2" Background="#FFFAFAFA" Foreground="#FFC35285" />
                                     <Grid VerticalAlignment="Bottom" Height="40" Background="#FFE6E6E6">
-                                        <Button Width="207" Height="33" Content="添加评论..." Margin="4,0,0,0" HorizontalContentAlignment="Left" BorderBrush="#FF919191" Background="#FFF7F7F7" Foreground="#FF636363" />
+                                        <Button Width="280" Height="33" Content="添加评论..." Margin="4,0,0,0" HorizontalContentAlignment="Left" BorderBrush="#FF919191" Background="#FFF7F7F7" Foreground="#FF636363" />
                                         <TextBlock Text="排序" VerticalAlignment="Top" Margin="0,10.6895,71,0" Width="36" HorizontalAlignment="Right" />
                                         <ComboBox x:Name="CommentSortCombo" HorizontalAlignment="Right" SelectedIndex="2" SelectionChanged="CommentSortChange" Margin="0,4,4,0" >
                                             <TextBlock Text="热门"/>
@@ -126,5 +126,13 @@
             </CommandBar>
         </Grid>
         <ProgressBar x:Name="ProgressStatus" Height="3" VerticalAlignment="Top" Background="Transparent" Foreground="#FFC35285"/>
+        <Grid x:Name="NotifyPane" Height="40" VerticalAlignment="Top" CornerRadius="20,20,20,20" Margin="80,10,80,0" Visibility="Collapsed">
+            <Grid.Background>
+                <AcrylicBrush TintColor="#7FD2CBE3"/>
+            </Grid.Background>
+            <Image Source="/Assets/Content/comment.png" Width="20" Height="20" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <TextBlock x:Name="NotifyDetail" Text="有一条新即时通知！" VerticalAlignment="Center" FontSize="16" Margin="50,0,40,0" TextTrimming="CharacterEllipsis"/>
+            <AppBarButton Icon="Cancel" Width="40" HorizontalAlignment="Right" Click="NotifyPanel_ButtonClick"/>
+        </Grid>
     </Grid>
 </Page>

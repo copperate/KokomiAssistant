@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Pivot Title="设定" FontSize="11">
+        <Pivot>
             <PivotItem Header="外观&amp;主页">
                 <ScrollViewer>
                     <Grid>
@@ -101,13 +101,13 @@
                     <TextBlock Text="已登录用户" Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
                     <ListView VerticalAlignment="Top" Margin="16,53,16,0" Height="220">
                         <Grid>
-                            <Ellipse Height="50" Width="50" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top">
+                            <Ellipse x:Name="UserLoginAvatar" Height="50" Width="50" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"></ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock Text="深海舌鲆鱼" Margin="70,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBlock x:Name="DetailUserLevel" Text="本地用户" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,39,0,0" FocusVisualPrimaryBrush="Black" Foreground="#FF5F5F5F" FontSize="11" />
+                            <TextBlock x:Name="UserLoginName" Text="深海舌鲆鱼" Margin="70,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBlock x:Name="UserLoginMethod" Text="本地用户" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,39,0,0" FocusVisualPrimaryBrush="Black" Foreground="#FF5F5F5F" FontSize="11" />
                         </Grid>
                     </ListView>
                     <TextBlock Text="关联新用户" Margin="16,273,22,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="Black"/>
@@ -121,6 +121,11 @@
                         <Grid>
                             <Image Source="/Assets/BindingPlatform/jabbr_icon.png" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBlock Text="登入 Jabbr" FontSize="14" VerticalAlignment="Center" Margin="50,0,10,0" Foreground="White"/>
+                        </Grid>
+                    </Button>
+                    <Button Margin="426,310,0,0" Click="CookieLogIn" VerticalAlignment="Top" Background="#FFF5D0C8" Padding="0,0,0,0" Width="200" HorizontalContentAlignment="Left" Height="44">
+                        <Grid>
+                            <TextBlock Text="Cookie 临时登入" FontSize="14" Foreground="Black" VerticalAlignment="Center" Margin="50,0,10,0" />
                         </Grid>
                     </Button>
                 </Grid>
@@ -174,11 +179,26 @@
                 </Grid>
             </PivotItem>
         </Pivot>
-        <Grid Height="0" VerticalAlignment="Top">
+        <Grid Visibility="Collapsed" x:Name="PopupGridBackground">
             <Grid.Background>
                 <AcrylicBrush TintColor="Transparent"/>
             </Grid.Background>
-
+            <Grid x:Name="CookieLogInGridPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFFDFDFD" CornerRadius="10,10,10,10" BorderBrush="#FFBBBBBB" BorderThickness="1,1,1,1" Height="400" Width="600">
+                <TextBlock Text="使用 Cookies 登入" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"/>
+                <TextBlock x:Name="CookieLoginNotify" Text="请在下面的文本框内粘贴获取到的 Cookies，然后按下“测试”按钮:" Margin="20,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBox x:Name="CookieLoginInputBox" Margin="20,80,20,60" TextWrapping="Wrap" AcceptsReturn="True" HorizontalTextAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <Button Content="测试" Margin="0,0,200,20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="32" Width="80" Click="CookieLoginTest" />
+                <Button Content="保存" Margin="0,0,110,20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="32" Width="80" Click="SaveCookie" />
+                <Button Content="取消" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Height="32" Width="80" Click="CookieLoginCancel" />
+            </Grid>
+        </Grid>
+        <Grid Visibility="Collapsed" x:Name="NotifyPane" Height="40" VerticalAlignment="Top" CornerRadius="20,20,20,20" Margin="80,10,80,0">
+            <Grid.Background>
+                <AcrylicBrush TintColor="#7FD2CBE3"/>
+            </Grid.Background>
+            <Image Source="/Assets/Content/comment.png" Width="20" Height="20" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <TextBlock x:Name="NotifyDetail" Text="有一条新即时通知！" VerticalAlignment="Center" FontSize="16" Margin="50,0,40,0" TextTrimming="CharacterEllipsis"/>
+            <AppBarButton Icon="Cancel" Width="40" HorizontalAlignment="Right" Click="NotifyPanel_ButtonClick"/>
         </Grid>
     </Grid>
 </Page>

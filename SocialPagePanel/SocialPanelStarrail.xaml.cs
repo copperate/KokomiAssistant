@@ -57,7 +57,7 @@ namespace KokomiAssistant
             }
             else
                 rootFrame.Navigate(typeof(PostDetailPanel), postID);
-            //}
+            
         }
 
         private void ListSortTypeChanged(object sender, SelectionChangedEventArgs e)

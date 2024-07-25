@@ -68,7 +68,7 @@ namespace KokomiAssistant
                     // 当导航堆栈尚未还原时，导航到第一页，
                     // 并通过将所需信息作为导航参数传入来配置
                     // 参数
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage2), e.Arguments);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
@@ -100,10 +100,12 @@ namespace KokomiAssistant
                 string schemehost = eventArgs.Uri.Scheme;
                 string localpath = eventArgs.Uri.AbsolutePath;
                 localpath = localpath.Substring(1);
+                //响应米游社域
                 if (schemehost == "mihoyobbs") 
                 {
                     rootFrame.Navigate(typeof(SchemeRedirectPanel), eventArgs.Uri);
                 }
+                //响应小心海助手域
                 if (schemehost == "kokomiassistant")
                 {
                     rootFrame.Navigate(typeof(MainPage),0);

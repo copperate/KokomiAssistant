@@ -47,17 +47,24 @@ namespace KokomiAssistant
             
         }
 
-        private void Gamestart_Genshin(object sender, RoutedEventArgs e)
+        private async void Gamestart_Genshin(object sender, RoutedEventArgs e)
         {
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             try
             {
-                System.Diagnostics.Process.Start(localSettings.Values["AppLocationGenshin"] as string);
+                string startlocation = localSettings.Values["AppLocationGenshin"] as string;
+                //await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
+                //System.Diagnostics.Process.Start("Assets/Plugins/Launcher.exe --run");
             }
             catch
             {
-                ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("运行失败，请检查设置。");
+                ((Window.Current.Content as Frame).Content as MainPage2).NotifyPane_Activated("运行失败，请检查设置。");
             }
+        }
+
+        private void SampleQuickTest(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(PostDetailPanel), "53411892");
         }
     }
 }

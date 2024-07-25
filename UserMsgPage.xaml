@@ -1,0 +1,127 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KokomiAssistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Microsoft.UI.Xaml.Controls"
+    x:Class="KokomiAssistant.UserMsgPage"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid Width="360" HorizontalAlignment="Left" CornerRadius="0,20,0,0">
+            <Grid.Background>
+                <AcrylicBrush/>
+            </Grid.Background>
+            <ScrollViewer>
+                <Grid>
+                    <Grid VerticalAlignment="Top" Height="100" Margin="16,16,16,0" Tapped="GotoUserDetailPage">
+                        <Ellipse x:Name="DetailUserImage" Height="80" Width="80" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Assets/Content/default_avatar.png" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock x:Name="DetailUserNickname" Text="深海舌鲆鱼" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="110,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="20" />
+                        <TextBlock x:Name="DetailUserIntroduce" Text="前往个人主页>>" Margin="0,10,8,0" FocusVisualPrimaryBrush="Black" Foreground="#FF757575" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                        <Image x:Name="DetailPendantImage" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/default_pendant.png" />
+                    </Grid>
+                    <ListView x:Name="NotificationSelectPane" Margin="0,132,0,0" SelectedIndex="0" CanDragItems="True" VerticalAlignment="Top" ItemClick="NotificationSelectPane_Clicked" IsItemClickEnabled="True">
+                        <Grid Tag="system">
+                            <TextBlock x:Name="NotificationsCountText" Text="通知与推送" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Image Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/notifications_push_icon.png" Margin="5,5,0,5" />
+                        </Grid>
+                        <Grid Tag="like">
+                            <TextBlock x:Name="LikeMetionCountText" Text="获赞与提及" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Image Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/like_mention_icon.png" Margin="5,5,0,5" />
+                        </Grid>
+                        <Grid Tag="reply">
+                            <TextBlock x:Name="ReplysCountText" Text="评论与回复" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Image Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Assets/Content/reply_comment_icon.png" Margin="5,5,0,5" />
+                        </Grid>
+                    </ListView>
+                    <Grid VerticalAlignment="Top" Margin="10,282,10,0">
+                        <TextBlock Text="私信列表" Foreground="Gray"/>
+                        <Line X2="400" Stroke="Gray" VerticalAlignment="Center" Margin="60,0,0,0"/>
+                    </Grid>
+                    <ListView x:Name="DMSelectPane" VerticalAlignment="Top" Margin="0,305,0,0" ItemClick="DMSelectPane_Clicked" IsDoubleTapEnabled="False" IsItemClickEnabled="True">
+                        <Grid>
+                            <TextBlock Text="小心海助手" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="60,0,0,21" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Ellipse Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,5">
+                                <Ellipse.Fill>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/StoreLogo.scale-100.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Text="May all the beauty be blessed ..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="60,25,0,0" FocusVisualPrimaryBrush="Black" Foreground="Gray" FontSize="14" IsHitTestVisible="False" />
+                        </Grid>
+                    </ListView>
+                </Grid>
+            </ScrollViewer>
+
+            <Button Width="15" Height="100" HorizontalAlignment="Right" FocusVisualPrimaryBrush="{x:Null}" Background="#33000000" Content=""/>
+        </Grid>
+        <Grid Margin="360,0,0,0">
+            <ScrollViewer x:Name="SystemView">
+                <ListView x:Name="SystemNotificationsView" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" ItemClick="NotificationGo" IsItemClickEnabled="True">
+                    
+                </ListView>
+            </ScrollViewer>
+            <ScrollViewer x:Name="LikeMentionView" Visibility="Collapsed">
+                <ListView x:Name="LikeMentionNotificationsView" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" ItemClick="NotificationGo" IsItemClickEnabled="True"/>
+            </ScrollViewer>
+            <ScrollViewer x:Name="ReplyView" Visibility="Collapsed" >
+                <ListView x:Name="CommentNotificationsView" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" ItemClick="NotificationGo" IsItemClickEnabled="True"/>
+            </ScrollViewer>
+            <Grid x:Name="DMView" Visibility="Collapsed">
+                <ScrollViewer Margin="0,0,0,40">
+                    <Grid>
+                        <Grid>
+                            <TextBlock Text="小心海助手" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,14,0,0" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" />
+                            <Ellipse Height="40" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,5">
+                                <Ellipse.Fill>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/StoreLogo.scale-100.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                        <ListView x:Name="DM_NotificationsView" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" IsItemClickEnabled="True" Margin="0,50,0,40">
+                            <Grid>
+                                <Ellipse Height="40" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,5">
+                                    <Ellipse.Fill>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/StoreLogo.scale-100.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Grid Background="#7FF6D4C9" CornerRadius="10,10,10,10" Margin="50,5,10,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <RichTextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,10,10" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" TextWrapping="Wrap">
+                                        <Paragraph>
+                                            <Run Text="应采儿：&#x000A;去到每一度 点解总会有得嘈&#x000A;难度继续困死阴湿小气岛&#x000A;我有一路 清楚找我有幅图&#x000A;闲话素来任你讲卡都好储&#x000A;厨房仔：&#x000A;走 去一个冇压力嘅地方&#x000A;尽情释放 唔驶理人哋眼光&#x000A;黑色白色 唔驶睇人面色&#x000A;意识空间 拥有无穷面积&#x000A;日出 日落 升空 降落&#x000A;一幕又一幕 如梦生命片段重现&#x000A;边一幕最值得回味快乐&#x000A;世世代代 一个一个部落起落&#x000A;边度着落 降临福地&#x000A;地球人 已经忘记 幸福 气味&#x000A;太空旅程 一步内 由呢度去到个度&#x000A;两道光线引导 启动星际航导&#x000A;随意门 去边度就边度&#x000A;感应天路 走佬&#x000A;应采儿：&#x000A;On a boat on a train or in an airplane&#x000A;There's nothing I'd rather do&#x000A;When we fly in the sky and we go so high&#x000A;I've got the world with you&#x000A;去到每一度 点解总会有得嘈&#x000A;难度继续困死阴湿小气岛&#x000A;我有一路 清楚找我有幅图&#x000A;闲话素来任你讲卡都好储&#x000A;陈冠希：&#x000A;细个个阵时日日喺度发梦&#x000A;老师话我长大之后一定冇用&#x000A;你咁嘅态度 我戥你老豆老母阴公&#x000A;但系今时今日 超西飞喺天空&#x000A;飞 飞到洛杉矶&#x000A;飞飞飞 继续超越自己&#x000A;而家飞飞飞度边度都似我屋企&#x000A;同我之前啲老师&#x000A;我而家举起我个杯&#x000A;我冇放喺心内向你敬礼&#x000A;一齐猜猜个枚&#x000A;247 玩成晚我同啲兄弟&#x000A;唔会嗌攰&#x000A;代表 clot 你可以叫我地 clot crew&#x000A;巴黎东京纽约马尔代夫&#x000A;感觉世界好闷&#x000A;细个发啲梦开始变现实&#x000A;除咗佢我个世界争咩 无乜&#x000A;应采儿：&#x000A;On a boat on a train or in an airplane&#x000A;There's nothing I'd rather do&#x000A;When we fly in the sky and we go so high&#x000A;I've got the world with you&#x000A;去到每一度 点解总会有得嘈&#x000A;难度继续困死阴湿小气岛&#x000A;我有一路 清楚找我有幅图&#x000A;闲话素来任你讲卡都好储&#x000A;MC仁：&#x000A;准备包袱走路 一步一步计算好&#x000A;冇最后说话 最后手稿&#x000A;冇嘢要透露 冇人走宝&#x000A;掉埋包袱走佬 冇论乜嘢地步&#x000A;不理疲劳&#x000A;天与地当被铺 冇任务 几咁好&#x000A;应采儿：&#x000A;On a boat on a train or in an airplane&#x000A;There's nothing I'd rather do&#x000A;When we fly in the sky and we go so high&#x000A;I've got the world with you&#x000A;去到每一度 点解总会有得嘈&#x000A;难度继续困死阴湿小气岛&#x000A;我有一路 清楚找我有幅图&#x000A;闲话素来任你讲卡都好储&#x000A;去到每一度 点解总会有得嘈&#x000A;难度继续困死阴湿小气岛&#x000A;我有一路 清楚找我有幅图&#x000A;闲话素来任你讲卡都好储"/>
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                </Grid>
+                            </Grid>
+                            <Grid>
+                                <Ellipse Height="40" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,5">
+                                    <Ellipse.Fill>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Content/default_avatar.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Grid Background="#7FAFC1E8" CornerRadius="10,10,10,10" Margin="50,5,10,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <RichTextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,10,10" FocusVisualPrimaryBrush="Black" Foreground="Black" FontSize="17" IsHitTestVisible="False" TextWrapping="Wrap">
+                                        <Paragraph>
+                                            <Run Text="短文本"/>
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                </Grid>
+                            </Grid>
+                        </ListView>
+                    </Grid>
+                </ScrollViewer>
+                <Grid VerticalAlignment="Bottom" Height="40" Background="#FFF4F4F4">
+                    <TextBox Height="33" PlaceholderText="发送消息……" Margin="4,0,124,0"/>
+                    <AppBarButton HorizontalAlignment="Right" Icon="Send" Width="40" Height="40" />
+                    <AppBarButton HorizontalAlignment="Right" Icon="Emoji" Width="40" Height="40" Margin="0,0,40,0" />
+                    <AppBarButton HorizontalAlignment="Right" Icon="Account" Width="40" Height="40" Margin="0,0,80,0" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

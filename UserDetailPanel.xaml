@@ -162,9 +162,35 @@
                         </ScrollViewer>
                     </Grid>
                 </PivotItem>
-                <PivotItem Header="评论"></PivotItem>
-                <PivotItem Header="收藏"></PivotItem>
-                <PivotItem Header="合集"></PivotItem>
+                <PivotItem Header="评论">
+                    <Grid>
+                        <Grid Visibility="Collapsed" x:Name="CommentListHideHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="180">
+                            <Image Source="/Assets/Content/warning.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Height="160"/>
+                            <TextBlock Text="因对方设定，此项不可见。" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ScrollViewer x:Name="UserCommentScrollView">
+                            <ListView x:Name="UserCommentList" Loaded="UserCommentShow" ItemClick="NavigateCommentDetail" IsItemClickEnabled="True">
+                                
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem Header="收藏">
+                    <Grid>
+                        <Grid x:Name="FavListHideHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="180">
+                            <Image Source="/Assets/Content/warning.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Height="160"/>
+                            <TextBlock Text="因对方设定，此项不可见。" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                </PivotItem>
+                <PivotItem Header="合集">
+                    <Grid>
+                        <Grid x:Name="FolderListHideHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="180">
+                            <Image Source="/Assets/Content/warning.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Height="160"/>
+                            <TextBlock Text="因对方设定，此项不可见。" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                </PivotItem>
             </Pivot>
         </Grid>
     </Grid>

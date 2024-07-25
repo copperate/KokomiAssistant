@@ -11,6 +11,7 @@ using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Cryptography.Certificates;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,12 +32,29 @@ namespace KokomiAssistant
     public sealed partial class SocialSearchPanel : Page
     {
         bool isReady=false;
+        Frame rootFrame = Window.Current.Content as Frame;
+        List<string> BlockwordList = new List<string>();
+
         public SocialSearchPanel()
         {
             this.InitializeComponent();
             isReady = true;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
-
+        public void refreshblockwords()
+        {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (localSettings.Values["BrowseSettings_BlockEnabled"] == null || !(bool)localSettings.Values["BrowseSettings_BlockEnabled"]) return;
+            string blockwords = "";
+            if (localSettings.Values["BrowseSettings_Blockwords"] != null)
+                blockwords = localSettings.Values["BrowseSettings_Blockwords"].ToString();
+            while (blockwords != "" && blockwords != null)
+            {
+                int sepchar = blockwords.IndexOf(",");
+                BlockwordList.Add(blockwords.Substring(0, sepchar));
+                blockwords = blockwords.Substring(sepchar + 1);
+            }
+        }
         private async void SearchButtonClicked(object sender, RoutedEventArgs e)
         {
             ProgressBarA.IsIndeterminate = true;
@@ -59,6 +77,16 @@ namespace KokomiAssistant
             SearchResultList.Items.Clear();
             for (int i = 0; i < listnum; i++)
             {
+                //关键词检查
+                bool containword = false;
+                for (int j = 0; j < BlockwordList.Count; j++)
+                {
+                    if (data.data.posts[i].user.nickname.Contains(BlockwordList[j])) containword = true;
+                    if (data.data.posts[i].post.subject.Contains(BlockwordList[j])) containword = true;
+                    if (data.data.posts[i].post.content.Contains(BlockwordList[j])) containword = true;
+                }
+                if (containword) continue;
+                //加载列表
                 String Gameid; int gamearea;
                 try { gamearea = data.data.posts[i].post.game_id; }
                 catch (System.NullReferenceException) { gamearea = 0; }
@@ -234,7 +262,7 @@ namespace KokomiAssistant
                 }
             }
             else
-                Frame.Navigate(typeof(PostDetailPanel), postID);
+                rootFrame.Navigate(typeof(PostDetailPanel), postID);
             //}
         }
 

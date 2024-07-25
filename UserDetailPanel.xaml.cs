@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
+using System.Security.Cryptography;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Gaming.Input;
+using Windows.Networking.NetworkOperators;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -57,18 +64,8 @@ namespace KokomiAssistant
             else DetailPendantImage.Source = null;
 
             DetailUserLocation.Text = "位置: " + Data.data.user_info.ip_region.ToString();
-            /*
-            if(Data.data.user_info.certifications == null)
-            {*/
-                DetailUserCertificationLabel.Height = 0;
-            /*
-            }
-            else
-            {
-                double WidthA = 26 + DetailUserLocationLabel.ActualWidth;
-                DetailUserCertificationLabel.Margin= new Thickness(WidthA, 0, 0, 0);    
-                DetailUserCertification.Text="认证: " + Data.data.user_info.certifications[0].label;
-            }*/
+            DetailUserCertificationLabel.Height = 0;
+            
             FollowingNumText.Text=Data.data.user_info.achieve.follow_cnt.ToString();
             FollowerNumText.Text = Data.data.user_info.achieve.followed_cnt.ToString();
             LikeNumText.Text=Data.data.user_info.achieve.like_num.ToString();
@@ -222,17 +219,83 @@ namespace KokomiAssistant
         public string subareaget(UserPostListObjectRoot subareaid,int currentid)
         {
             string get1;
-            try
+            if(subareaid.data.list[currentid].post.forum != null)
             {
                 get1 = subareaid.data.list[currentid].post.forum.name;
+
             }
-            catch
-            {
-                get1 = "无版区";
-            }
+            else get1 = "无版区";
+            
             return (get1);
         }
 
+        private async void UserCommentShow(object sender, RoutedEventArgs e)
+        {
+            string userID = DetailUserID.Tag.ToString(); string nextOffset = "";
+            if (UserCommentList.Tag != null) nextOffset = UserCommentList.Tag.ToString();
+
+            Uri uri = new Uri("https://api-takumi.miyoushe.com/post/api/userReply?offset=" + nextOffset + "&size=20&uid=" + userID);
+            HttpClient client = new HttpClient();
+            var headers = client.DefaultRequestHeaders;
+            headers.Referrer = new Uri("https://app.mihoyo.com");
+            var responce = await client.GetAsync(uri);          //TODO:增加离线逻辑
+            var result = await responce.Content.ReadAsStringAsync();
+            var serializer = new DataContractJsonSerializer(typeof(RepliesObjectRoot));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            RepliesObjectRoot userReplies = (RepliesObjectRoot)serializer.ReadObject(ms);
+
+            if (userReplies.retcode != 0) 
+            {
+                CommentListHideHint.Visibility = Visibility.Visible;
+                UserCommentScrollView.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                UserCommentList.Tag = userReplies.data.next_offset;
+                DateTime dt = new DateTime(1970, 1, 1, 8, 0, 0);
+                for (int i = 0; i < userReplies.data.list.Count; i++) 
+                {
+                    Grid grid = new Grid(); Grid grid2 = new Grid();
+                    TextBlock forward = new TextBlock();
+                    grid2.Width = 5;grid2.Height = 30;grid2.CornerRadius = new CornerRadius(2.5);grid2.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 86, 212, 255));
+                    grid2.HorizontalAlignment = HorizontalAlignment.Left;grid.Children.Add(grid2);
+
+                    forward.Margin = new Thickness(10, 0, 0, 0);
+                    forward.VerticalAlignment = VerticalAlignment.Top;forward.HorizontalAlignment = HorizontalAlignment.Left;forward.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 124, 124, 124));
+                    if (userReplies.data.list[i].r_reply != null)
+                    {
+                        forward.Text = dt.AddSeconds(userReplies.data.list[i].reply.created_at).ToLocalTime().ToString() + " · 回复评论 " + userReplies.data.list[i].r_reply.content;
+                    }
+                    else 
+                    if (userReplies.data.list[i].r_post != null)
+                    {
+                        forward.Text = dt.AddSeconds(userReplies.data.list[i].reply.created_at).ToLocalTime().ToString() + " · 在帖子<" + userReplies.data.list[i].r_post.subject + ">下的回复";
+                    }
+                    grid.Children.Add(forward);
+
+                    TextBlock detail = new TextBlock();
+                    detail.VerticalAlignment = VerticalAlignment.Top; detail.HorizontalAlignment = HorizontalAlignment.Left;
+                    detail.FontSize = 16;detail.Margin = new Thickness(10, 23, 0, 0);
+                    detail.Text = userReplies.data.list[i].reply.content;
+                    grid.Children.Add(detail);
+
+                    grid.Tag = userReplies.data.list[i].reply.post_id;
+                    UserCommentList.Items.Add(grid);
+                }
+            }
+        }
+
+        private void NavigateCommentDetail(object sender, ItemClickEventArgs e)
+        {
+            String postID;
+            dynamic clickedItem = e.ClickedItem;
+            postID = (string)clickedItem.Tag;
+            if (String.Equals(postID[0], 't'))
+            {
+
+            }
+            else Frame.Navigate(typeof(PostDetailPanel), postID);
+        }
     }
     public class UserPostListViewContentPost 
     { 

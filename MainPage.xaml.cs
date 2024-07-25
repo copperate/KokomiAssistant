@@ -25,11 +25,11 @@ namespace KokomiAssistant
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public static MainPage navPage;
+        //public static MainPage navPage;
         public MainPage()
         {
             this.InitializeComponent();
-            navPage = this;
+            //navPage = this;
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 

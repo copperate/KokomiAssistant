@@ -27,7 +27,7 @@ namespace KokomiAssistant
     {
 
         DateTime dt = new DateTime(1970, 1, 1);
-
+        Frame rootFrame = Window.Current.Content as Frame;
         public SocialPanelHonkai3()
         {
             this.InitializeComponent();
@@ -38,7 +38,7 @@ namespace KokomiAssistant
             String postID;
             dynamic clickedItem = e.ClickedItem;
             postID = (string)clickedItem.Tag;
-            Frame.Navigate(typeof(PostDetailPanel), postID);
+            rootFrame.Navigate(typeof(PostDetailPanel), postID);
         }
 
         private void AppbarButton_Refresh_Click(object sender, RoutedEventArgs e)

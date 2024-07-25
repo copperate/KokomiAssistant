@@ -1,9 +1,16 @@
-﻿using System;
+﻿using KokomiAssistant.PostViewMode;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -33,6 +40,7 @@ namespace KokomiAssistant
     public sealed partial class SettingsPanel : Page
     {
         bool isReady = false;
+        bool isCookieValidated = false;
         public SettingsPanel()
         {
             this.InitializeComponent();
@@ -178,12 +186,12 @@ namespace KokomiAssistant
                 {
                     if(filename== "launcher.exe")
                     {
-                        ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("小心海助手识别到游戏启动器；已更改为游戏本体。");
+                        ((Window.Current.Content as Frame).Content as MainPage2).NotifyPane_Activated("小心海助手识别到游戏启动器；已更改为游戏本体。");
 
                     }
                     else
                     {
-                        ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("请选择游戏本体（GenshinImpact.exe/YuanShen.exe）或者启动器（launcher.exe）；小心海助手无法识别当前所选择的文件。");
+                        ((Window.Current.Content as Frame).Content as MainPage2).NotifyPane_Activated("请选择游戏本体（GenshinImpact.exe/YuanShen.exe）或者启动器（launcher.exe）；小心海助手无法识别当前所选择的文件。");
                         return;
                     }
                 }
@@ -246,7 +254,15 @@ namespace KokomiAssistant
                 }
                 else AppLocationStarrail.Text = "%Application_Path%";
             //用户&关联
+            if (localSettings.Values["LoginUser"] != null && (int)localSettings.Values["LoginUser"] != 0)
+            {
+                ImageBrush image1 = new ImageBrush();
+                image1.ImageSource = new BitmapImage(new Uri(localSettings.Values["LoginUserAvatar"].ToString()));
+                UserLoginAvatar.Fill = image1;
+                UserLoginName.Text = localSettings.Values["LoginUsername"].ToString();
+                UserLoginMethod.Text = "通过 Cookies 登入";
 
+            }
             //浏览&功能
             if (localSettings.Values["BrowseSettings_BlockEnabled"] != null && (bool)localSettings.Values["BrowseSettings_BlockEnabled"] == true)
             {
@@ -296,7 +312,7 @@ namespace KokomiAssistant
                 AddblockwordTextbox.Text = "";
                 RefreshSettings_Blockwords();
             }
-            else ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("请输入一个有效词。");
+            else ((Window.Current.Content as Frame).Content as MainPage2).NotifyPane_Activated("请输入一个有效词。");
         }
 
         private void BrowsePage_ClearBlockword(object sender, TappedRoutedEventArgs e)
@@ -308,7 +324,162 @@ namespace KokomiAssistant
 
         private void Aboutpage_SourceLink(object sender, TappedRoutedEventArgs e)
         {
-            Launcher.LaunchUriAsync(new Uri(@"https://github.com/copperate/KokomiAssistant"));
+            _ = Launcher.LaunchUriAsync(new Uri(@"https://github.com/copperate/KokomiAssistant"));
+        }
+
+        private void CookieLogIn(object sender, RoutedEventArgs e)
+        {
+            CookieLogInGridPanel.Visibility = Visibility.Visible;
+            PopupGridBackground.Visibility = Visibility.Visible;
+        }
+
+        private void CookieLoginCancel(object sender, RoutedEventArgs e)
+        {
+            CookieLogInGridPanel.Visibility = Visibility.Collapsed;
+            PopupGridBackground.Visibility = Visibility.Collapsed;
+            CookieLoginNotify.Text = "请在下面的文本框内粘贴获取到的 Cookies，然后按下“测试”按钮:";
+        }
+
+        private void CookieLoginTest(object sender, RoutedEventArgs e)
+        {
+            List<string> cookies = new List<string>();
+            if (CookieLoginInputBox.Text == "") 
+            {
+                NotifyPane_Activated("Cookie 无效，请检查后再试一次。");
+                return;
+            }
+            //Cookie URL解码
+            string CookieString = System.Web.HttpUtility.UrlDecode(CookieLoginInputBox.Text, System.Text.Encoding.UTF8);
+            while (CookieString != "") 
+            { 
+                string oneLineCookie;
+                if (CookieString.IndexOf("; ") >= 0)  oneLineCookie= CookieString.Substring(0, CookieString.IndexOf("; "));
+                else { 
+                    oneLineCookie = CookieString;
+                    CookieString = "";
+                }
+                cookies.Add(oneLineCookie);
+                int i = CookieString.IndexOf("; ") + 2;
+                if (i <= CookieString.Length) CookieString = CookieString.Substring(i);
+            }
+            //重输出处理好的文本至文本框
+            CookieLoginInputBox.Text = "";
+            for (int i = 0; i < cookies.Count(); i++) 
+            {
+                CookieLoginInputBox.Text = CookieLoginInputBox.Text + cookies[i] + "\n";
+            }
+            //验证Cookie有效性
+            GetUserDetailViaCookie(cookies);
+        }
+        public async void GetUserDetailViaCookie(List<string> cookies)
+        {
+            UserDetailRoot data =await GetUserDetail(cookies);
+            if (data.retcode != 0) 
+            {
+                NotifyPane_Activated("Cookies 无效，请检查后再试一次。");
+            }
+            else
+            {
+                NotifyPane_Activated("Cookies 登入测试成功！用户ID：" + data.data.user_info.uid + "，昵称：" + data.data.user_info.nickname + "。");
+                CookieLoginNotify.Text = "Cookies 已被修正为可读格式，无需再次粘贴。当前用户：" + data.data.user_info.nickname + "。请确认无误后按下保存。";
+                isCookieValidated = true;
+            }
+        }
+        //获得用户信息（全局）
+        public async static Task<UserDetailRoot> GetUserDetail(List<string> cookies)
+        {
+            //判断Cookie来源
+            int cookiesChannel = 0;
+            for (int i = 0; i < cookies.Count(); i++) 
+            {
+                if (cookies[i].Contains("stoken")) cookiesChannel = 1;
+            }
+            //使用移动端或网页版拉取方法
+            Uri uri;
+            if (cookiesChannel == 1) uri = new Uri("https://bbs-api.miyoushe.com/user/api/getUserFullInfo");
+            else uri = new Uri("https://bbs-api.miyoushe.com/user/wapi/getUserFullInfo");
+            var handler = new HttpClientHandler() { UseCookies = false };
+            HttpClient client = new HttpClient(handler);
+            client.DefaultRequestHeaders.ConnectionClose = true;
+            var headers = client.DefaultRequestHeaders;
+            headers.Referrer = new Uri("https://www.miyoushe.com");
+            var message = new HttpRequestMessage(HttpMethod.Get, uri);
+            for (int i = 0; i < cookies.Count(); i++)
+            {
+                message.Headers.Add("Cookie", cookies[i]);
+            }
+            var responce = await client.SendAsync(message);
+            var result = await responce.Content.ReadAsStringAsync();
+            var serializer = new DataContractJsonSerializer(typeof(UserDetailRoot));
+
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            var data = (UserDetailRoot)serializer.ReadObject(ms);
+            return data;
+        }
+
+        //提示框
+        private void NotifyPanel_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async void NotifyPane_Activated(string message)
+        {
+            NotifyPane.Visibility = Visibility.Visible;
+            NotifyDetail.Text = message;
+            var result = await PaneClose();
+            NotifyPane.Visibility = Visibility.Collapsed;
+        }
+        public async Task<string> PaneClose()
+        {
+            return await Task.Run(() => {
+                Thread.Sleep(5000); return "";
+            });
+        }
+
+        private void SaveCookie(object sender, RoutedEventArgs e)
+        {
+            if(!isCookieValidated) { NotifyPane_Activated("Cookies 未确认有效性，请检查后继续。"); return; }
+            List<string> cookies = new List<string>();
+            string CookieString = CookieLoginInputBox.Text;
+            while (CookieString != "")
+            {
+                string oneLineCookie;
+                if (CookieString.IndexOf("\r") >= 0) oneLineCookie = CookieString.Substring(0, CookieString.IndexOf("\r"));
+                else
+                {
+                    oneLineCookie = CookieString;
+                    CookieString = "";
+                }
+                cookies.Add(oneLineCookie);
+                int i = CookieString.IndexOf("\r") + 1;
+                if (i <= CookieString.Length) CookieString = CookieString.Substring(i);
+            }
+            SaveUserDetailViaCookie(cookies);
+
+            NotifyPane_Activated("Cookies 已成功保存。");
+            CookieLogInGridPanel.Visibility = Visibility.Collapsed;
+            PopupGridBackground.Visibility = Visibility.Collapsed;
+            CookieLoginNotify.Text = "请在下面的文本框内粘贴获取到的 Cookies，然后按下“测试”按钮:";
+        }
+        public async void SaveUserDetailViaCookie(List<string> cookies)
+        {
+            UserDetailRoot data = await GetUserDetail(cookies);
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            //写入用户数据
+            localSettings.Values["LoginUser"] = 1;
+            localSettings.Values["LoginUsername"] = data.data.user_info.nickname;
+            localSettings.Values["LoginUserID"] = data.data.user_info.uid;
+            localSettings.Values["LoginUserAvatar"] = data.data.user_info.avatar_url;
+            localSettings.Values["LoginUserPendant"] = data.data.user_info.pendant;
+            
+            string onelinecookie = "";
+            for (int i = 0; i < cookies.Count(); i++)
+            {
+                onelinecookie = CookieLoginInputBox.Text + cookies[i] + "\r";
+            }
+            if (onelinecookie.Contains("stoken")) localSettings.Values["LoginMethod"] = 1;
+            else localSettings.Values["LoginMethod"] = 0;
+            localSettings.Values["LoginCookies"] = onelinecookie;
         }
     }
 }

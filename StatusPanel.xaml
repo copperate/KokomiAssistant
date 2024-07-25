@@ -9,14 +9,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Image Name="StatusPanelBackground" Source="/Assets/Background/Wallpaper01.png" Stretch="UniformToFill" Loaded="BackgroundLoad" />
+        <Image Name="StatusPanelBackground" Source="/Assets/Background/Wallpaper01.png" Stretch="UniformToFill" Loaded="BackgroundLoad" Margin="0,-40,0,0" />
         <TextBlock x:Name="pageTitle" Text="主页"
-                   Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="White"/>
+                   Margin="16,16,16,0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Top" FontWeight="Normal" Foreground="White" Visibility="Collapsed"/>
         <Grid Height="80" VerticalAlignment="Bottom">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Transparent"/>
-                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#00828282"/>
+                    <GradientStop Color="#FF828282" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.ColumnDefinitions>
@@ -105,7 +105,7 @@
             
 
         </ScrollViewer>
-        <ListView FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None" Margin="0,75,0,0" Width="329" HorizontalAlignment="Left">
+        <ListView FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsSwipeEnabled="False" IsDoubleTapEnabled="False" IsTapEnabled="False" IsMultiSelectCheckBoxEnabled="False" SelectionMode="None" Margin="0,20,0,0" Width="329" HorizontalAlignment="Left">
             <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" 
                 Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" UseLayoutRounding="False" Height="150" Margin="0,10,0,0" Click="Gamestart_Genshin">
                 <Button.Background>
@@ -179,6 +179,20 @@
                     </Ellipse>
                     <TextBlock Text="界面设定" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
                     <TextBlock Text="前往设定 &gt;" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,13,10,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                </Grid>
+            </Button>
+            <Button Width="300" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Padding="0,0,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="Black" FocusVisualPrimaryBrush="Black" BorderThickness="0,0,0,0" Click="SampleQuickTest">
+                <Button.Background>
+                    <AcrylicBrush TintColor="#B2006CBE" AlwaysUseFallback="False" BackgroundSource="Backdrop"/>
+                </Button.Background>
+                <Grid>
+                    <Ellipse Height="30" Width="30" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Assets/StoreLogo.scale-100.png" Stretch="UniformToFill"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="快速测试" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="45,13,0,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
+                    <TextBlock Text="进入 &gt;" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,13,10,0" FocusVisualPrimaryBrush="Black" Foreground="White" FontSize="18" />
                 </Grid>
             </Button>
         </ListView>

@@ -37,10 +37,6 @@ namespace KokomiAssistant
                 string uri=e.Parameter.ToString();
                 await InsideWebView.EnsureCoreWebView2Async();
 
-                //try { ((Window.Current.Content as Frame).Content as MainPage).NotifyPane_Activated("正在通过“小心海助手”打开链接，请注意信息安全……"); outvision = 0; } 
-                //catch { ((Window.Current.Content as Frame).Content as SchemeRedirectPanel).NotifyPane_Activated("正在通过“小心海助手”打开链接，请注意信息安全……"); outvision = 1; }
-
-
                 InsideWebView.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.179/180 Mobile Safari/537.36 miHoYoBBS/2.59.1 KokomiAssistant/0.1.3";
                 InsideWebView.CoreWebView2.Navigate(uri);
                 InsideViewAddressBar.Text = uri;
